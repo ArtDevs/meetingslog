@@ -16,6 +16,8 @@ public class User {
     private Date tmLastLogin;
     private Date tmRegistered;
 
+    public User(){}
+
     public User(Integer id,
                 String login,
                 String password,

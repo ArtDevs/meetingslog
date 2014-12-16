@@ -7,7 +7,8 @@
 	   						http://www.springframework.org/schema/context
 	   						http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:property-placeholder location="META-INF/custom-config/jdbc.conf"/>
+	<context:component-scan base-package="org.artdevs.meetingslog"/>
+	<context:property-placeholder location="classpath:META-INF/data/jdbc.conf"/>
 
 	<bean id="dataSrc" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="url" value="${jdbc.url}"/>
@@ -21,7 +22,7 @@
 		<constructor-arg type="javax.sql.DataSource" ref="dataSrc"/>
 	</bean>
 
-	<bean id="InitDB" class="org.artdevs.meetingslog.dao.InitDB">
-		<property name="rec" value="${jdbc.schema}"/>
+	<bean id="initDB" class="org.artdevs.meetingslog.dao.InitDB">
+		<property name="rec" value="${jdbc.schema}"/> <!--${jdbc.schema}-->
 	</bean>
 </beans>

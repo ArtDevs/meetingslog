@@ -21,7 +21,7 @@ public interface UserDAO {
     public void updateByLogin(User user);
 
     public void removeById(int id);
-    public void removeByLogin(int login);
+    public void removeByLogin(String login);
 
     public boolean checkPassword(String login, String password);
 

@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,20 +18,11 @@ import java.util.Random;
 @ContextConfiguration("classpath:META-INF/custom-config/core-custom-spring.xml")
 public class InitDBTest extends TestCase {
 
-    @Resource(name = "initDB")
-    private InitDB initDB;
-
+    @Qualifier("userSqlDao")
     @Autowired
     private UserDAO userDAO;
 
-    @Before
-    public void testInitialize() throws Exception {
-
-        Assert.assertNotNull(initDB);
-        initDB.initialize();
-    }
-
-    @Test
+     @Test
     public void testInsert ()throws Exception {
         User testUser = new User();
 

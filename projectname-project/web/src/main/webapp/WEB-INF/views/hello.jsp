@@ -13,5 +13,12 @@
 <body>
 <h1>this is hello :)</h1>
 <p>${customMessage}</p>
+<p>
+  <link title="${loginHeader}" href="${loginLink}"/>
+</p>
+<p>
+  <link title="${signUpHeader}" href="${signUpLink}"/>
+</p>
+
 </body>
 </html>

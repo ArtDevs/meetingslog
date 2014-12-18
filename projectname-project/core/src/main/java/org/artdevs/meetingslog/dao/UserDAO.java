@@ -15,13 +15,13 @@ public interface UserDAO {
     public User findById(int id);
     public User findByLogin(String login);
 
-    public void insert(User user);
+    public void insert(User user) throws SQLException;
 
-    public void updateById(User user);
-    public void updateByLogin(User user);
+    public void updateById (User user) throws SQLException;
+    public void updateByLogin(User user) throws SQLException;
 
-    public void removeById(int id);
-    public void removeByLogin(String login);
+    public void removeById(int id) throws SQLException;
+    public void removeByLogin(String login) throws SQLException;
 
     public boolean checkPassword(String login, String password);
 

@@ -19,10 +19,19 @@
 
   <!--Project specific properties with versions, db params etc...-->
   <properties>
+    <!--Common versions-->
     <spring.version>4.0.0.RELEASE</spring.version>
     <junit.version>4.11</junit.version>
     <log4j.version>1.2.17</log4j.version>
     <org.slf4j-version>1.7.5</org.slf4j-version>
+
+    <!--java versions-->
+    <java.compiler.sources>1.7</java.compiler.sources>
+    <java.compiler.target>1.7</java.compiler.target>
+
+    <!--Setting encodings-->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
@@ -145,11 +154,11 @@
   <build>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <source>${java.compiler.sources}</source>
+          <target>${java.compiler.target}</target>
         </configuration>
       </plugin>
     </plugins>

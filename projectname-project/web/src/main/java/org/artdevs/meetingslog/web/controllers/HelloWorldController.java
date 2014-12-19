@@ -1,6 +1,5 @@
 package org.artdevs.meetingslog.web.controllers;
 
-import com.sun.javafx.sg.PGShape;
 import org.artdevs.meetingslog.core.CoreComponent;
 import org.artdevs.meetingslog.facades.FacadeComponent;
 import org.artdevs.meetingslog.services.ServiceComponent;
@@ -21,7 +20,7 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/")
 public class HelloWorldController {
 
-	@Resource(name = "coreComponent")
+	@Autowired
 	CoreComponent coreComponent;
 
 	@Autowired

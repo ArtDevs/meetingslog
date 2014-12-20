@@ -1,4 +1,4 @@
-package org.artdevs.meetingslog.dao;
+package org.artdevs.meetingslog.core.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;

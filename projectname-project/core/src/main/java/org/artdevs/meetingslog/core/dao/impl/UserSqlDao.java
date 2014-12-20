@@ -1,31 +1,48 @@
-package org.artdevs.meetingslog.dao.impl;
+package org.artdevs.meetingslog.core.dao.impl;
 
-import org.artdevs.meetingslog.dao.UserDAO;
-import org.artdevs.meetingslog.model.User;
+import org.artdevs.meetingslog.core.dao.UserDAO;
+import org.artdevs.meetingslog.core.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 
-import java.lang.reflect.Field;
+import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Created by Slava on 11.12.2014.
  */
+
 @Component
 public class UserSqlDao implements UserDAO{
 
     @Autowired
+    private DriverManagerDataSource dataSrc;
+
+    private Resource rec;
+
+    @Autowired
     NamedParameterJdbcTemplate namedParamTemplate;
 
+    @Value("${jdbc.schema}")
+    public void setRec(Resource rec) {
+        this.rec = rec;
+    }
 
     private RowMapper<User> userRowMapper=new RowMapper<User>(){
         public User mapRow (ResultSet res,int rowNum)throws SQLException {
@@ -42,6 +59,42 @@ public class UserSqlDao implements UserDAO{
             );
         }
     };
+
+    @PostConstruct
+    public void initialize(){
+        try{
+
+            InputStream iStream=rec.getInputStream();
+            Scanner scan=new Scanner(iStream);
+            StringBuilder sqlStr=new StringBuilder();
+
+            while(scan.hasNext()){
+                sqlStr.append(scan.nextLine()).append("\n");
+            }
+            scan.close();
+            iStream.close();
+
+            Connection conn=null;
+            Statement query=null;
+
+            try{
+                conn=dataSrc.getConnection();
+                query=conn.createStatement();
+                query.execute(sqlStr.toString());
+
+            }catch(SQLException exept){
+                throw new RuntimeException("SQL error creating tables",exept);
+            }finally {
+                try {
+                    if (conn != null)
+                        conn.close();
+                }catch(SQLException exept){}
+            }
+
+        }catch(IOException exept){
+            throw new RuntimeException("Bad resource",exept);
+        }
+    }
 
     @Override
     public List<User> getAll(){

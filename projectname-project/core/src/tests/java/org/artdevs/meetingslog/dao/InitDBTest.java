@@ -1,7 +1,9 @@
 package org.artdevs.meetingslog.dao;
 
 import junit.framework.TestCase;
-import org.artdevs.meetingslog.model.User;
+import org.artdevs.meetingslog.core.dao.InitDB;
+import org.artdevs.meetingslog.core.dao.UserDAO;
+import org.artdevs.meetingslog.core.model.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,26 +13,17 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
-import java.util.Random;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:META-INF/custom-config/core-custom-spring.xml")
 public class InitDBTest extends TestCase {
 
-    @Resource(name = "initDB")
-    private InitDB initDB;
-
     @Autowired
     private UserDAO userDAO;
 
-    @Before
-    public void testInitialize() throws Exception {
 
-        Assert.assertNotNull(initDB);
-        initDB.initialize();
-    }
 
-    @Test
+       @Test
     public void testInsert ()throws Exception {
         User testUser = new User();
 

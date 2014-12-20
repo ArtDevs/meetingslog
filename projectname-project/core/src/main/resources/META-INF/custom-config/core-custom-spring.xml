@@ -22,7 +22,4 @@
 		<constructor-arg type="javax.sql.DataSource" ref="dataSrc"/>
 	</bean>
 
-	<bean id="initDB" class="org.artdevs.meetingslog.dao.InitDB">
-		<property name="rec" value="${jdbc.schema}"/> <!--${jdbc.schema}-->
-	</bean>
 </beans>

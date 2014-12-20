@@ -1,4 +1,4 @@
-package org.artdevs.meetingslog.model;
+package org.artdevs.meetingslog.core.model;
 
 import java.util.Date;
 

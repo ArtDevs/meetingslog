@@ -1,8 +1,7 @@
-package org.artdevs.meetingslog.dao;
+package org.artdevs.meetingslog.core.dao;
 
-import org.artdevs.meetingslog.model.User;
+import org.artdevs.meetingslog.core.model.User;
 
-import java.sql.SQLException;
 import java.util.List;
 
 /**

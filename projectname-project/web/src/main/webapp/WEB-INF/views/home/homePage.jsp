@@ -11,6 +11,7 @@
     <title></title>
 </head>
 <body>
-
+${login}<br/>
+${pass}
 </body>
 </html>

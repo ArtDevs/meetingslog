@@ -19,23 +19,43 @@ public class LoginPageController {
 
     private static String REDIRECT_TO_HOME = "redirect:/home";
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String login (final Model model) {
-
+    @RequestMapping(method = RequestMethod.GET) //if we have some troubles
+    public String login(final Model model) {
         model.addAttribute("loginForm", new LoginForm());
-
         return WebConstants.LOGIN_PAGE;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
-    public String doLogin (final Model model,
-                           @ModelAttribute final LoginForm loginForm,
-                           final RedirectAttributes attributes) {
+    @RequestMapping(method = RequestMethod.POST) // if all our data is right
+    public String doLogin(final Model model,
+                          @ModelAttribute final LoginForm loginForm,
+                          final RedirectAttributes attributes) {
 
         attributes.addAttribute("login", loginForm.getLogin());
         attributes.addAttribute("pass", loginForm.getPass());
 
-        return REDIRECT_TO_HOME;
+        if (loginForm.getLogin().isEmpty() && loginForm.getPass().isEmpty()) {
+            String messageForLogin = "Invalid Login. Try Again";
+            model.addAttribute("msgLogin", messageForLogin);
+            String messageForPass = "Invalid Password. Try Again";
+            model.addAttribute("msgPass", messageForPass);
+            return WebConstants.LOGIN_PAGE;
+        }
+
+        if (loginForm.getLogin().isEmpty()) {
+            String messageForLogin = "Invalid Login. Try Again";
+            model.addAttribute("msgLogin", messageForLogin);
+            return WebConstants.LOGIN_PAGE;
+        }
+        else if (loginForm.getPass().isEmpty()) {
+            String messageForPass = "Invalid Password. Try Again";
+            model.addAttribute("msgPass", messageForPass);
+            return WebConstants.LOGIN_PAGE;
+        }
+        else {
+            attributes.addAttribute("msg1", "Successes");
+            return REDIRECT_TO_HOME;
+        }
+
     }
 
     @RequestMapping(value = "/forgot", method = RequestMethod.GET)

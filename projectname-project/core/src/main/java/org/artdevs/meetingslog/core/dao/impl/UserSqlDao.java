@@ -28,7 +28,7 @@ import java.util.Scanner;
  * Created by Slava on 11.12.2014.
  */
 
-@Component
+//@Component
 public class UserSqlDao implements UserDAO{
 
     @Autowired
@@ -39,7 +39,7 @@ public class UserSqlDao implements UserDAO{
     @Autowired
     NamedParameterJdbcTemplate namedParamTemplate;
 
-    @Value("${jdbc.schema}")
+//    @Value("${jdbc.schema}")
     public void setRec(Resource rec) {
         this.rec = rec;
     }
@@ -62,6 +62,7 @@ public class UserSqlDao implements UserDAO{
 
     @PostConstruct
     public void initialize(){
+        System.err.println("==========================" + rec);
         try{
 
             InputStream iStream=rec.getInputStream();

@@ -2,7 +2,6 @@ package org.artdevs.meetingslog.web.controllers;
 
 import org.artdevs.meetingslog.web.constants.WebConstants;
 import org.artdevs.meetingslog.web.forms.LoginForm;
-import org.artdevs.meetingslog.web.forms.NewUserForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;

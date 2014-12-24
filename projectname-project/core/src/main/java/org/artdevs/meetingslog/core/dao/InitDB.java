@@ -1,10 +1,11 @@
 package org.artdevs.meetingslog.core.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.stereotype.Component;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -13,20 +14,22 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 /**
- * Created by Slava on 12.12.2014.
+ * Created by Slava on 22.12.2014.
  */
-//@Component
+
+@Component
 public class InitDB {
     @Autowired
     private DriverManagerDataSource dataSrc;
 
     private Resource rec;
 
+    @Value("${jdbc.schema}")
     public void setRec(Resource rec) {
         this.rec = rec;
     }
 
-    public void initialize(){
+    public void initialize() throws SQLException {
         try{
 
             InputStream iStream=rec.getInputStream();
@@ -43,6 +46,7 @@ public class InitDB {
             Statement query=null;
 
             try{
+
                 conn=dataSrc.getConnection();
                 query=conn.createStatement();
                 query.execute(sqlStr.toString());
@@ -53,11 +57,14 @@ public class InitDB {
                 try {
                     if (conn != null)
                         conn.close();
-                }catch(SQLException exept){}
+                }catch(SQLException exept){
+                    throw exept;
+                }
             }
 
         }catch(IOException exept){
             throw new RuntimeException("Bad resource",exept);
         }
     }
+
 }

@@ -7,6 +7,7 @@ import java.util.Date;
  */
 public class User {
     private Integer id;
+    private Role role;
     private String login;
     private String password;
     private String firstName;
@@ -19,6 +20,7 @@ public class User {
     public User(){}
 
     public User(Integer id,
+                Role role,
                 String login,
                 String password,
                 String firstName,
@@ -28,6 +30,7 @@ public class User {
                 Date tmLastLogin,
                 Date tmRegistered) {
         this.id = id;
+        this.role=role;
         this.login = login;
         this.password = password;
         this.firstName = firstName;
@@ -44,6 +47,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role ref_role) {
+        this.role = ref_role;
     }
 
     public String getLogin() {

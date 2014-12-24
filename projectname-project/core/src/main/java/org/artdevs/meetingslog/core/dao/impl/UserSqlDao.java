@@ -1,28 +1,21 @@
 package org.artdevs.meetingslog.core.dao.impl;
 
 import org.artdevs.meetingslog.core.dao.UserDAO;
+import org.artdevs.meetingslog.core.model.Role;
 import org.artdevs.meetingslog.core.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
+
 
 /**
  * Created by Slava on 11.12.2014.
@@ -32,22 +25,16 @@ import java.util.Scanner;
 public class UserSqlDao implements UserDAO{
 
     @Autowired
-    private DriverManagerDataSource dataSrc;
-
-    private Resource rec;
-
-    @Autowired
     NamedParameterJdbcTemplate namedParamTemplate;
-
-    @Value("${jdbc.schema}")
-    public void setRec(Resource rec) {
-        this.rec = rec;
-    }
 
     private RowMapper<User> userRowMapper=new RowMapper<User>(){
         public User mapRow (ResultSet res,int rowNum)throws SQLException {
             return new User(
                     res.getInt("id"),
+                    new Role(res.getInt("role_id"),
+                             res.getString("role_name"),
+                             res.getString("role_description"),
+                             res.getInt("role_permissions")),
                     res.getString("login"),
                     res.getString("password"),
                     res.getString("firstName"),
@@ -60,52 +47,16 @@ public class UserSqlDao implements UserDAO{
         }
     };
 
-    @PostConstruct
-    public void initialize(){
-        try{
-
-            InputStream iStream=rec.getInputStream();
-            Scanner scan=new Scanner(iStream);
-            StringBuilder sqlStr=new StringBuilder();
-
-            while(scan.hasNext()){
-                sqlStr.append(scan.nextLine()).append("\n");
-            }
-            scan.close();
-            iStream.close();
-
-            Connection conn=null;
-            Statement query=null;
-
-            try{
-                conn=dataSrc.getConnection();
-                query=conn.createStatement();
-                query.execute(sqlStr.toString());
-
-            }catch(SQLException exept){
-                throw new RuntimeException("SQL error creating tables",exept);
-            }finally {
-                try {
-                    if (conn != null)
-                        conn.close();
-                }catch(SQLException exept){}
-            }
-
-        }catch(IOException exept){
-            throw new RuntimeException("Bad resource",exept);
-        }
-    }
-
     @Override
     public List<User> getAll(){
-        final String qryStr="SELECT * FROM users";
+        final String qryStr="SELECT * FROM ml_users_roles";
 
         return namedParamTemplate.query(qryStr, userRowMapper);
     }
 
     @Override
     public List<User> getByEmail(String email) {
-        final String qryStr="SELECT * FROM users WHERE email=:email";
+        final String qryStr="SELECT * FROM ml_users_roles WHERE email=:email";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("email",email);
@@ -115,7 +66,7 @@ public class UserSqlDao implements UserDAO{
 
     @Override
     public User findById(int id) {
-        final String qryStr="SELECT * FROM users WHERE id=:id";
+        final String qryStr="SELECT * FROM ml_users_roles WHERE id=:id";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("id",id);
@@ -127,7 +78,7 @@ public class UserSqlDao implements UserDAO{
 
     @Override
     public User findByLogin(String login) {
-        final String qryStr="SELECT * FROM users WHERE login=:login";
+        final String qryStr="SELECT * FROM ml_users_roles WHERE login=:login";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("login",login);
@@ -140,16 +91,17 @@ public class UserSqlDao implements UserDAO{
     @Override
     public void insert(User user) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("INSERT INTO users ");
-        qryStrBuilder.append("(login,password,firstName,secondName,email,comment,tmLastLogin,tmRegistered)");
+        qryStrBuilder.append("INSERT INTO ml_users ");
+        qryStrBuilder.append("(login,ref_role,password,firstName,secondName,email,comment,tmLastLogin,tmRegistered)");
         qryStrBuilder.append(" VALUES ");
-        qryStrBuilder.append("(:login,:password,:firstName,:secondName,:email,:comment,:tmLastLogin,:tmRegistered)");
+        qryStrBuilder.append("(:login,:ref_role,:password,:firstName,:secondName,:email,:comment,:tmLastLogin,:tmRegistered)");
 
         final String qryStr=qryStrBuilder.toString();
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
         mapPars.put("login", user.getLogin());
+        mapPars.put("ref_role", user.getRole().getId());
         mapPars.put("password", user.getPassword());
         mapPars.put("firstName", user.getFirstName());
         mapPars.put("secondName", user.getSecondName());
@@ -159,13 +111,14 @@ public class UserSqlDao implements UserDAO{
         mapPars.put("tmRegistered", user.getTmRegistered());
 
         namedParamTemplate.update(qryStr,mapPars);
+        user.setId(findByLogin(user.getLogin()).getId());
     }
 
     @Override
     public void updateById(User user) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("UPDATE users SET ");
-        qryStrBuilder.append("login=:login,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
+        qryStrBuilder.append("UPDATE ml_users SET ");
+        qryStrBuilder.append("login=:login,ref_role=:ref_role,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
         qryStrBuilder.append("comment=:comment,tmLastLogin=:tmLastLogin,tmRegistered=:tmRegistered");
         qryStrBuilder.append(" WHERE id=:id");
 
@@ -174,6 +127,7 @@ public class UserSqlDao implements UserDAO{
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
         mapPars.put("id", user.getId());
+        mapPars.put("ref_role", user.getRole().getId());
         mapPars.put("login", user.getLogin());
         mapPars.put("password", user.getPassword());
         mapPars.put("firstName", user.getFirstName());
@@ -189,8 +143,8 @@ public class UserSqlDao implements UserDAO{
     @Override
     public void updateByLogin(User user) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("UPDATE users SET ");
-        qryStrBuilder.append("id=:id,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
+        qryStrBuilder.append("UPDATE ml_users SET ");
+        qryStrBuilder.append("id=:id,ref_role=:ref_role,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
         qryStrBuilder.append("comment=:comment,tmLastLogin=:tmLastLogin,tmRegistered=:tmRegistered");
         qryStrBuilder.append(" WHERE login=:login");
 
@@ -199,6 +153,7 @@ public class UserSqlDao implements UserDAO{
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
         mapPars.put("id", user.getId());
+        mapPars.put("ref_role", user.getRole().getId());
         mapPars.put("login", user.getLogin());
         mapPars.put("password", user.getPassword());
         mapPars.put("firstName", user.getFirstName());
@@ -218,7 +173,7 @@ public class UserSqlDao implements UserDAO{
 
         mapPars.put("id",id);
 
-        final String qryStr="DELETE FROM users WHERE id=:id";
+        final String qryStr="DELETE FROM ml_users WHERE id=:id";
 
         namedParamTemplate.update(qryStr,mapPars);
     }
@@ -229,7 +184,7 @@ public class UserSqlDao implements UserDAO{
 
         mapPars.put("login",login);
 
-        final String qryStr="DELETE FROM users WHERE login=:login";
+        final String qryStr="DELETE FROM ml_users WHERE login=:login";
 
         namedParamTemplate.update(qryStr,mapPars);
     }

@@ -22,4 +22,8 @@
 		<constructor-arg type="javax.sql.DataSource" ref="dataSrc"/>
 	</bean>
 
+	<bean id="userSqlDao" class="org.artdevs.meetingslog.core.dao.impl.UserSqlDao">
+		<property name="rec" value="${jdbc.schema}"/>
+	</bean>
+
 </beans>

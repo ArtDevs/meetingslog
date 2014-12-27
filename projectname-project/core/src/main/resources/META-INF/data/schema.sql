@@ -38,3 +38,15 @@ CREATE OR REPLACE VIEW ml_users_roles AS
     LEFT JOIN
     ml_roles AS Roles
       ON Users.ref_role=Roles.id;
+
+INSERT INTO ml_roles
+  (name,description,permissions)
+VALUES
+  ('guest','Guest user role with standard permissions (predefined).',0x55)
+ON DUPLICATE KEY UPDATE permissions=permissions;
+
+INSERT INTO ml_roles
+  (name,description,permissions)
+VALUES
+  ("admin","Administrative role with super user permissions (predefined).",0xFF)
+ON DUPLICATE KEY UPDATE permissions=permissions;

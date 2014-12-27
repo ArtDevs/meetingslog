@@ -16,8 +16,8 @@
 <body>
 <h1>Welcome to registration page</h1>
 
-<sf:form method="POST" modelAttribute="newUser" enctype="multipart/form-data">
-  <sf:errors path="*" cssClass="error"/>
+<sf:form method="POST" modelAttribute="newUser">
+  <%--<sf:errors path="*" cssClass="error"/>--%>
 
   <fieldset>
     <table cellspacing="1" cellpadding="1">
@@ -59,6 +59,10 @@
 
       <tr>
         <td align="center" colspan="2"><input name="commit" type="submit" value="Try to create account."/></td>
+      </tr>
+
+      <tr>
+        <td align="left" colspan="2">${message}</td>
       </tr>
 
     </table>

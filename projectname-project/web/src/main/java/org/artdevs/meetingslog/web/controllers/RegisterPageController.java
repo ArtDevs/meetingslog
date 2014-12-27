@@ -33,24 +33,27 @@ public class RegisterPageController {
     @RequestMapping(method = RequestMethod.GET)
     public String register(Model model) {
         model.addAttribute("newUser",new UserFacade());
+        model.addAttribute("message","");
         return WebConstants.REGISTER_PAGE;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doRegister(@ModelAttribute("newUser") UserFacade newUser, BindingResult bindingResult) {
+    public String doRegister(@ModelAttribute("newUser") @Valid UserFacade newUser, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
-            //model.addAttribute("newUser",newUser);
+
+            model.addAttribute("message","Wrong input data, check form for errors.");
             return WebConstants.REGISTER_PAGE;
         }
 
         if(mapUser.verify(newUser)){
             User newUserModel=mapUser.mapToModel(newUser);
             userServices.insertUser(newUserModel);
-            return WebConstants.ACCOUNT_PAGE;
+            model.addAttribute("message","");
+            return "hello";
         }
         else {
-            //model.addAttribute("newUser",newUser);
+            model.addAttribute("message","Login already used.");
             return WebConstants.REGISTER_PAGE;
         }
 

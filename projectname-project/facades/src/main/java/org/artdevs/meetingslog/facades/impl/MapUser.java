@@ -48,7 +48,7 @@ public class MapUser implements MapFormData<UserFacade,User> {
     @Override
     public boolean verify(UserFacade data) {
 
-        return userDAO.findByLogin(data.getLogin())!=null;
+        return userDAO.findByLogin(data.getLogin())==null;
 
     }
 }

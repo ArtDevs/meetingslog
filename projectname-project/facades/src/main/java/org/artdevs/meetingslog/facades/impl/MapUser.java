@@ -5,18 +5,16 @@ import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Role;
 import org.artdevs.meetingslog.core.model.User;
 import org.artdevs.meetingslog.facades.MapFormData;
-import org.artdevs.meetingslog.facades.facademodel.UserFacade;
+import org.artdevs.meetingslog.facades.data.UserData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.sql.SQLException;
 
 /**
  * Created by Slava on 25.12.2014.
  */
 
 @Component
-public class MapUser implements MapFormData<UserFacade,User> {
+public class MapUser implements MapFormData<UserData,User> {
 
     @Autowired
     RoleDAO roleDAO;
@@ -25,14 +23,13 @@ public class MapUser implements MapFormData<UserFacade,User> {
     UserDAO userDAO;
 
     @Override
-    public User mapToModel(UserFacade data) throws RuntimeException {
+    public User mapToModel(UserData data) throws RuntimeException {
 
         User res=new User();
         Role r=new Role();
 
         try {
             res.setLogin(data.getLogin());
-            res.setRole(roleDAO.findByName("guest"));
             res.setPassword(data.getPassword());
             res.setFirstName(data.getFirstName());
             res.setSecondName(data.getSecondName());
@@ -46,7 +43,7 @@ public class MapUser implements MapFormData<UserFacade,User> {
     }
 
     @Override
-    public boolean verify(UserFacade data) {
+    public boolean verify(UserData data) {
 
         return userDAO.findByLogin(data.getLogin())==null;
 

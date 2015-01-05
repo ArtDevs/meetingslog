@@ -52,7 +52,6 @@ public class DaoTest extends TestCase {
             roleDAO.insert(testRole);
             testRole=roleDAO.findByName(testRole.getName());
 
-            testUser.setRole(testRole);
             testUser.setLogin("testLogin"+i);
             testUser.setPassword("testPassword"+i);
             testUser.setFirstName("testFirstName"+i);
@@ -85,7 +84,6 @@ public class DaoTest extends TestCase {
         roleDAO.insert(testRole);
 
         testUser.setLogin("testLogin");
-        testUser.setRole(testRole);
         testUser.setPassword("testPassword");
         testUser.setFirstName("testFirstName");
         testUser.setSecondName("testSecondName");

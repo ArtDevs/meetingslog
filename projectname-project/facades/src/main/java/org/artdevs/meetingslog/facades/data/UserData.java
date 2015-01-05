@@ -1,7 +1,6 @@
-package org.artdevs.meetingslog.facades.facademodel;
+package org.artdevs.meetingslog.facades.data;
 
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Pattern;
@@ -11,7 +10,7 @@ import javax.validation.constraints.Size;
  * Created by Slava on 25.12.2014.
  */
 @Component
-public class UserFacade {
+public class UserData {
     @Size(min=5, max = 25, message = "Login must be from 5 to 25 characters long.")
     @Pattern(regexp = "^[a-z,A-Z,0-9,_]{5,}$", message = "Login can include only letters, numbers and _")
     private String login;

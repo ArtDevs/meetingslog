@@ -1,5 +1,6 @@
 package org.artdevs.meetingslog.core.dao;
 
+import org.artdevs.meetingslog.core.model.Role;
 import org.artdevs.meetingslog.core.model.User;
 
 import java.util.List;
@@ -21,6 +22,11 @@ public interface UserDAO {
 
     public void removeById(int id);
     public void removeByLogin(String login);
+
+    public void getUserRoles(User user);
+
+    public void addRole(User user, Role role);
+    public void removeRole(User user, Role role);
 
     public boolean checkPassword(String login, String password);
 

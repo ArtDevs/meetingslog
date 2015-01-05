@@ -1,7 +1,7 @@
 package org.artdevs.meetingslog.web.controllers;
 
 import org.artdevs.meetingslog.core.model.User;
-import org.artdevs.meetingslog.facades.facademodel.UserFacade;
+import org.artdevs.meetingslog.facades.data.UserData;
 import org.artdevs.meetingslog.facades.impl.MapUser;
 import org.artdevs.meetingslog.services.UserServices;
 import org.artdevs.meetingslog.web.constants.WebConstants;
@@ -32,13 +32,13 @@ public class RegisterPageController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String register(Model model) {
-        model.addAttribute("newUser",new UserFacade());
+        model.addAttribute("newUser",new UserData());
         model.addAttribute("message","");
         return WebConstants.REGISTER_PAGE;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String doRegister(@ModelAttribute("newUser") @Valid UserFacade newUser, BindingResult bindingResult, Model model) {
+    public String doRegister(@ModelAttribute("newUser") @Valid UserData newUser, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()){
 

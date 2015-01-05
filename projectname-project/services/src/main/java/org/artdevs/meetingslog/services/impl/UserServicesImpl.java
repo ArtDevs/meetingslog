@@ -1,5 +1,6 @@
 package org.artdevs.meetingslog.services.impl;
 
+import org.artdevs.meetingslog.core.dao.RoleDAO;
 import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.User;
 import org.artdevs.meetingslog.services.UserServices;
@@ -15,6 +16,9 @@ public class UserServicesImpl implements UserServices {
     @Autowired
     UserDAO userDAO;
 
+    @Autowired
+    RoleDAO roleDAO;
+
     @Override
     public boolean insertUser(User user) throws RuntimeException {
         if(userDAO.findByLogin(user.getLogin())!=null) {
@@ -22,6 +26,7 @@ public class UserServicesImpl implements UserServices {
         }
         else{
             userDAO.insert(user);
+            userDAO.addRole(user,roleDAO.findByName("guest"));
             return true;
         }
     }

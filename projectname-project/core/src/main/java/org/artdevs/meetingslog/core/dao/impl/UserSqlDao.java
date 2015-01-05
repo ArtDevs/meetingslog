@@ -208,7 +208,7 @@ public class UserSqlDao implements UserDAO{
         qryStrBuilder.append("(user_id,role_id)");
         qryStrBuilder.append(" VALUES ");
         qryStrBuilder.append("(:user_id,:role_id) ");
-        qryStrBuilder.append("ON DUPLICATED KEY UPDATE role_id=role_id");
+        qryStrBuilder.append("ON DUPLICATE KEY UPDATE role_id=:role_id");
 
         final String qryStr=qryStrBuilder.toString();
 

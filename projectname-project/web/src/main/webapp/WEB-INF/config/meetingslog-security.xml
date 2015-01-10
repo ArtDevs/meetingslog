@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xmlns:beans="http://www.springframework.org/schema/beans"
+			 xsi:schemaLocation="http://www.springframework.org/schema/security
+							  http://www.springframework.org/schema/security/spring-security.xsd
+							  http://www.springframework.org/schema/beans
+							  http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<http auto-config="true" >
+		<intercept-url pattern="/logs**" access="ROLE_USER"/>
+		<form-login login-page="/login"
+					default-target-url="/"
+					authentication-failure-url="/login/fail2login"/>
+		<logout logout-success-url="/logout"/>
+
+		<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/welcome" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	</http>
+
+	<authentication-manager>
+		<authentication-provider>
+			<jdbc-user-service data-source-ref="dataSrc"
+							   users-by-username-query="select login, password, active from ml_users where login=?"
+							   authorities-by-username-query="select login, role_name from ml_users_roles_vw WHERE login =?"
+					/>
+		</authentication-provider>
+	</authentication-manager>
+
+</beans:beans>

@@ -25,7 +25,7 @@ public class HelloWorldController {
 	@Autowired
 	ServiceComponent serviceComponent;
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/welcome", method = RequestMethod.GET)
 	public String helloWorld (final Model model) {
 
 		String message = coreComponent.getMessage() + "<br>" + facadeComponent.getMessage() + "<br>" + serviceComponent.getMessage();
@@ -45,7 +45,7 @@ public class HelloWorldController {
 		return "hello";
 	}
 
-	@RequestMapping(method = RequestMethod.GET, params = "login")
+	@RequestMapping(method = RequestMethod.GET)
 	public String askForLogin(Model model){
 		model.addAttribute("login","login");
 		model.addAttribute("password","password");

@@ -11,6 +11,7 @@
     <title></title>
 </head>
 <body>
+<h1>Welcome home!</h1>
 ${login}<br/>
 ${pass}
 </body>

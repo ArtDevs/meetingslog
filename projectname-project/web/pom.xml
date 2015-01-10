@@ -1,46 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.artdevs.meetingslog</groupId>
-        <artifactId>meetings-log-project</artifactId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
+	<parent>
+		<groupId>org.artdevs.meetingslog</groupId>
+		<artifactId>meetings-log-project</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
 
-    <groupId>org.artdevs.meetingslog.web</groupId>
-    <artifactId>meetings-log-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+	<properties>
+		<!--Common versions-->
+		<spring.version>3.2.5.RELEASE</spring.version>
+	</properties>
 
-    <packaging>war</packaging>
+	<groupId>org.artdevs.meetingslog.web</groupId>
+	<artifactId>meetings-log-web</artifactId>
+	<version>1.0-SNAPSHOT</version>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.artdevs.meetingslog.facades</groupId>
-            <artifactId>meetings-log-facades</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.artdevs.meetingslog.core</groupId>
-            <artifactId>meetings-log-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+	<packaging>war</packaging>
 
-    <build>
-        <finalName>Meetings Log portal</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.mortbay.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
-                <version>8.1.14.v20131031</version>
-                <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+	<dependencies>
+		<dependency>
+			<groupId>org.artdevs.meetingslog.facades</groupId>
+			<artifactId>meetings-log-facades</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.artdevs.meetingslog.core</groupId>
+			<artifactId>meetings-log-core</artifactId>
+			<version>1.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>Meetings Log portal</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.mortbay.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>8.1.14.v20131031</version>
+				<configuration>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

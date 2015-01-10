@@ -49,13 +49,16 @@ public class RegisterPageController {
         if(mapUser.verify(newUser)){
             User newUserModel=mapUser.mapToModel(newUser);
             userServices.insertUser(newUserModel);
-            model.addAttribute("message","");
+            model.addAttribute("customMessage","Your login was successfully registered. Now you can join our community as guest user.");
+            model.addAttribute("loginHeader", "Here you can log in.");
+            model.addAttribute("loginLink","login");
+            model.addAttribute("signUpHeader","Here you can sign up as new guest user.");
+            model.addAttribute("signUpLink","register");
             return "hello";
         }
         else {
             model.addAttribute("message","Login already used.");
             return WebConstants.REGISTER_PAGE;
         }
-
     }
 }

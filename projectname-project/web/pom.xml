@@ -27,11 +27,6 @@
             <artifactId>meetings-log-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.springmodules</groupId>-->
-            <!--<artifactId>spring-modules-validation</artifactId>-->
-            <!--<version>0.8</version>-->
-        <!--</dependency>-->
     </dependencies>
 
     <build>
@@ -47,5 +42,5 @@
             </plugin>
         </plugins>
     </build>
-    
+
 </project>

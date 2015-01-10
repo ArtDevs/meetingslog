@@ -47,4 +47,14 @@ public class UserServicesImpl implements UserServices {
         userDAO.removeById(user.getId());
         return true;
     }
+
+    @Override
+    public boolean checkPassword(String login, String password) {
+        return false;
+    }
+
+    @Override
+    public User findUserByName(String login) {
+        return null;
+    }
 }

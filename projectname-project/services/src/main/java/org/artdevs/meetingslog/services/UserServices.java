@@ -9,4 +9,6 @@ public interface UserServices {
     public boolean insertUser(User user) throws RuntimeException;
     public boolean changeUserInfo(User user) throws RuntimeException;
     public boolean deleteUser(User user) throws RuntimeException;
+    public boolean checkPassword(String login, String password);
+    public User findUserByName(String login);
 }

@@ -24,6 +24,34 @@ CREATE TABLE IF NOT EXISTS ml_user_role_ref (
   CONSTRAINT UNIQUE KEY ml_user_role_ref_key(user_id,role_id)
 );
 
+CREATE TABLE IF NOT EXISTS ml_messages (
+  id INTEGER PRIMARY KEY AUTO_INCREMENT,
+  owner_id INTEGER NOT NULL REFERENCES ml_users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  readonly BOOL NOT NULL DEFAULT FALSE,
+  msg_text TEXT
+);
+
+CREATE OR REPLACE VIEW ml_user_messages AS
+  SELECT
+    User.id AS id,
+    User.login AS login,
+    User.password AS password,
+    User.firstName AS firstName,
+    User.secondName AS secondName,
+    User.email AS email,
+    User.comment AS comment,
+    User.tmLastLogin AS tmLastLogin,
+    User.tmRegistered AS tmRegistered,
+    Msg.id AS msg_id,
+    Msg.readonly AS msg_readonly,
+    Msg.msg_text AS msg_text
+  FROM
+    ml_users AS User
+    LEFT JOIN
+    ml_messages AS Msg
+      ON User.id=Msg.owner_id;
+
+
 CREATE OR REPLACE VIEW ml_user_role_ref_vw AS
   SELECT
     User.id AS id,

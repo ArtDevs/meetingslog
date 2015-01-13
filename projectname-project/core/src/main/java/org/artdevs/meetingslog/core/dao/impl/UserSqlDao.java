@@ -3,7 +3,6 @@ package org.artdevs.meetingslog.core.dao.impl;
 import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Role;
 import org.artdevs.meetingslog.core.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,9 +49,9 @@ public class UserSqlDao implements UserDAO{
         @Override
         public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Role(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("description"),
+                rs.getInt("role_id"),
+                rs.getString("role_name"),
+                rs.getString("role_description"),
                 rs.getInt("permissions")
             );
         }
@@ -234,8 +232,13 @@ public class UserSqlDao implements UserDAO{
     }
 
     @Override
-    public void getUserRoles(User user) {
+    public List<Role> getUserRoles(User user) {
+        final String qryStr="SELECT * FROM ml_users_roles WHERE user_id=:user_id";
 
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+        mapPars.put("user_id",user.getId());
+
+        return namedParamTemplate.query(qryStr,mapPars, roleRowMapper);
     }
 
     @Override
@@ -244,4 +247,5 @@ public class UserSqlDao implements UserDAO{
 
         return usr.getPassword().equals(password);
     }
+
 }

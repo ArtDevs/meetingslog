@@ -12,6 +12,7 @@
 </head>
 <body>
 ${login}<br/>
-${pass}
+${pass}<br/>
+${msg1}<br/>
 </body>
 </html>

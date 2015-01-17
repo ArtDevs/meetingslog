@@ -30,7 +30,7 @@ public class InitDB {
         this.rec = rec;
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void initialize() throws SQLException {
         try{
 

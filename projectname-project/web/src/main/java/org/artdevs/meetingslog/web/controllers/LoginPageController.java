@@ -41,7 +41,7 @@ public class LoginPageController {
         attributes.addAttribute("pass", loginForm.getPass());
         try {
             User user = userSqlDao.findByLogin(loginForm.getLogin());
-            if(loginForm.getPass() == user.getPassword()){
+            if(loginForm.getPass().equals(user.getPassword())){
             attributes.addAttribute("msg1", "Successes");
             return REDIRECT_TO_HOME;}
             else {
@@ -50,32 +50,10 @@ public class LoginPageController {
                 return WebConstants.LOGIN_PAGE;
             }
         } catch (Exception e) {
-            String messageForLogin = "Invalid Login. Try Again";
+            String messageForLogin = "There is no registered users with this login in DataBase";
             model.addAttribute("msgLogin", messageForLogin);
             return WebConstants.LOGIN_PAGE;
         }
-        /*if (loginForm.getLogin().isEmpty() && loginForm.getPass().isEmpty()) {
-            String messageForLogin = "Invalid Login. Try Again";
-            model.addAttribute("msgLogin", messageForLogin);
-            String messageForPass = "Invalid Password. Try Again";
-            model.addAttribute("msgPass", messageForPass);
-            return WebConstants.LOGIN_PAGE;
-        }
-
-        if (loginForm.getLogin().isEmpty()) {
-            String messageForLogin = "Invalid Login. Try Again";
-            model.addAttribute("msgLogin", messageForLogin);
-            return WebConstants.LOGIN_PAGE;
-        }
-        else if (loginForm.getPass().isEmpty()) {
-            String messageForPass = "Invalid Password. Try Again";
-            model.addAttribute("msgPass", messageForPass);
-            return WebConstants.LOGIN_PAGE;
-        }
-        else {
-            attributes.addAttribute("msg1", "Successes");
-            return REDIRECT_TO_HOME;
-        }*/
     }
 
     @RequestMapping(value = "/forgot", method = RequestMethod.GET)

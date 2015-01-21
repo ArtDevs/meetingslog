@@ -12,6 +12,9 @@ CREATE TABLE IF NOT EXISTS ml_users(
   firstName VARCHAR(50),
   secondName VARCHAR(50),
   email VARCHAR(255),
+  address VARCHAR(255) NULL DEFAULT NULL,
+  phoneNumber1 VARCHAR(20) NULL DEFAULT NULL,
+  phoneNumber2 VARCHAR(20) NULL DEFAULT NULL,
   comment VARCHAR(500),
   tmLastLogin TIMESTAMP,
   tmRegistered TIMESTAMP
@@ -39,6 +42,9 @@ CREATE OR REPLACE VIEW ml_user_messages AS
     User.firstName AS firstName,
     User.secondName AS secondName,
     User.email AS email,
+    User.address AS address,
+    User.phoneNumber1 AS phoneNumber1,
+    User.phoneNumber2 AS phoneNumber2,
     User.comment AS comment,
     User.tmLastLogin AS tmLastLogin,
     User.tmRegistered AS tmRegistered,
@@ -60,6 +66,9 @@ CREATE OR REPLACE VIEW ml_user_role_ref_vw AS
     User.firstName AS firstName,
     User.secondName AS secondName,
     User.email AS email,
+    User.address AS address,
+    User.phoneNumber1 AS phoneNumber1,
+    User.phoneNumber2 AS phoneNumber2,
     User.comment AS comment,
     User.tmLastLogin AS tmLastLogin,
     User.tmRegistered AS tmRegistered,
@@ -78,6 +87,9 @@ CREATE OR REPLACE VIEW ml_users_roles_vw AS
     UserRoleRef.firstName AS firstName,
     UserRoleRef.secondName AS secondName,
     UserRoleRef.email AS email,
+    UserRoleRef.address AS address,
+    UserRoleRef.phoneNumber1 AS phoneNumber1,
+    UserRoleRef.phoneNumber2 AS phoneNumber2,
     UserRoleRef.comment AS comment,
     UserRoleRef.tmLastLogin AS tmLastLogin,
     UserRoleRef.tmRegistered AS tmRegistered,
@@ -105,9 +117,9 @@ VALUES
 ON DUPLICATE KEY UPDATE permissions=permissions;
 
 INSERT INTO ml_users
-(login, password, firstName, secondName, email, comment)
+(login, password, firstName, secondName, email, address,phoneNumber1,phoneNumber2,comment)
     VALUES
-("admin","admin","","","","Default administartive account.")
+("admin","admin","","","","","","","Default administartive account.")
 ON DUPLICATE KEY UPDATE password=password;
 
 INSERT INTO ml_user_role_ref

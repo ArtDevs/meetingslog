@@ -12,6 +12,9 @@ public class User {
     private String firstName;
     private String secondName;
     private String email;
+    private String address;
+    private String phoneNumber1;
+    private String phoneNumber2;
     private String comment;
     private Date tmLastLogin;
     private Date tmRegistered;
@@ -24,6 +27,9 @@ public class User {
                 String firstName,
                 String secondName,
                 String email,
+                String address,
+                String phoneNumber1,
+                String phoneNumber2,
                 String comment,
                 Date tmLastLogin,
                 Date tmRegistered) {
@@ -33,6 +39,9 @@ public class User {
         this.firstName = firstName;
         this.secondName = secondName;
         this.email = email;
+        this.address=address;
+        this.phoneNumber1=phoneNumber1;
+        this.phoneNumber2=phoneNumber2;
         this.comment = comment;
         this.tmLastLogin = tmLastLogin;
         this.tmRegistered = tmRegistered;
@@ -84,6 +93,30 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber1() {
+        return phoneNumber1;
+    }
+
+    public void setPhoneNumber1(String phoneNumber1) {
+        this.phoneNumber1 = phoneNumber1;
+    }
+
+    public String getPhoneNumber2() {
+        return phoneNumber2;
+    }
+
+    public void setPhoneNumber2(String phoneNumber2) {
+        this.phoneNumber2 = phoneNumber2;
     }
 
     public String getComment() {

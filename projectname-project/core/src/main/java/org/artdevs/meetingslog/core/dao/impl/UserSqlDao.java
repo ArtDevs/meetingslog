@@ -108,7 +108,7 @@ public class UserSqlDao implements UserDAO{
         qryStrBuilder.append("(login,password,firstName,secondName,email,address,phoneNumber1,phoneNumber2," +
                 "comment,tmLastLogin,tmRegistered)");
         qryStrBuilder.append(" VALUES ");
-        qryStrBuilder.append("(:login,:password,:firstName,:secondName,:email,:address,:phoneNumber1,:phoneNumber2" +
+        qryStrBuilder.append("(:login,:password,:firstName,:secondName,:email,:address,:phoneNumber1,:phoneNumber2," +
                 ":comment,:tmLastLogin,:tmRegistered)");
 
         final String qryStr=qryStrBuilder.toString();
@@ -120,9 +120,9 @@ public class UserSqlDao implements UserDAO{
         mapPars.put("firstName", user.getFirstName());
         mapPars.put("secondName", user.getSecondName());
         mapPars.put("email", user.getEmail());
-        mapPars.put("address", user.getEmail());
-        mapPars.put("phoneNumber1", user.getEmail());
-        mapPars.put("phoneNumber2", user.getEmail());
+        mapPars.put("address", user.getAddress());
+        mapPars.put("phoneNumber1", user.getPhoneNumber1());
+        mapPars.put("phoneNumber2", user.getPhoneNumber2());
         mapPars.put("comment", user.getComment());
         mapPars.put("tmLastLogin", user.getTmLastLogin());
         mapPars.put("tmRegistered", user.getTmRegistered());

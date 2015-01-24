@@ -19,13 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 public class HomePageController {
 
     @RequestMapping(method = RequestMethod.GET)
-    public String homePage(final Model model, final HttpServletRequest request,
-                           @RequestParam("login") String login,
-                           @RequestParam("pass") String pass) {
-        String message = request.getParameter("msg1");
+    public String homePage(final Model model,
+                           @RequestParam(value = "login", required = false) String login,
+                           @RequestParam(value = "pass", required = false) String pass) {
+
         model.addAttribute("login", login);
         model.addAttribute("pass", pass);
-        model.addAttribute("msg1", message);
 
         return WebConstants.HOME_PAGE;
     }

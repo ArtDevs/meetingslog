@@ -6,6 +6,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -29,6 +30,7 @@ public class InitDB {
         this.rec = rec;
     }
 
+//    @PostConstruct
     public void initialize() throws SQLException {
         try{
 

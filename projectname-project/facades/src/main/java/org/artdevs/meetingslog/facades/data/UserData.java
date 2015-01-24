@@ -35,11 +35,11 @@ public class UserData {
     private String address;
 
     @Size(max=20, message = "Phone number too long.")
-    @Pattern(regexp = "^[0-9,+-]+")
+    @Pattern(regexp = "^[0-9, +-]+")
     private String phoneNumber1;
 
     @Size(max=20, message = "Phone number too long.")
-    @Pattern(regexp = "^[0-9,+-]+")
+    @Pattern(regexp = "^[0-9, +-]+")
     private String phoneNumber2;
 
     @Size(max = 500, message = "Comment must up to 500 characters long.")

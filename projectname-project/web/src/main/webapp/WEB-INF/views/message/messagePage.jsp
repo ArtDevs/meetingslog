@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: artlaber
@@ -8,9 +9,23 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title></title>
+    <title>Messages of user.</title>
 </head>
 <body>
+  <c:if test="${not empty messages}">
 
+    <table>
+      <tbody>
+      <c:forEach items="${messages}" var="msg">
+        <tr>
+          <td>
+
+          </td>
+        </tr>
+      </c:forEach>
+      </tbody>
+    </table>
+
+  </c:if>
 </body>
 </html>

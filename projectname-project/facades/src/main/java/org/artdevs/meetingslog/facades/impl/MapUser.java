@@ -34,6 +34,9 @@ public class MapUser implements MapFormData<UserData,User> {
             res.setFirstName(data.getFirstName());
             res.setSecondName(data.getSecondName());
             res.setEmail(data.getEmail());
+            res.setAddress(data.getAddress());
+            res.setPhoneNumber1(data.getPhoneNumber1());
+            res.setPhoneNumber2(data.getPhoneNumber2());
             res.setComment(data.getComment());
         }catch (RuntimeException e){
             return null;

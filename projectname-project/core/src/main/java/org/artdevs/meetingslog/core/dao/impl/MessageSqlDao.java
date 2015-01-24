@@ -42,7 +42,6 @@ public class MessageSqlDao implements MessageDAO{
     @Override
     public List<Message> getAll() {
         final String qryStr="SELECT * FROM ml_user_messages";
-
         return namedParamTemplate.query(qryStr, msgRowMapper);
     }
 

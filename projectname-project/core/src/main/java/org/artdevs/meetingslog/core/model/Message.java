@@ -4,10 +4,10 @@ package org.artdevs.meetingslog.core.model;
  * Created by Slava on 13.01.2015.
  */
 public class Message {
-    int id;
-    boolean readonly;
-    String msg_text;
-    int ownerId;
+    protected int id;
+    protected boolean readonly;
+    protected String msg_text;
+    protected int ownerId;
 
     public Message(int id, boolean readonly, String msg_text) {
         this.id=id;

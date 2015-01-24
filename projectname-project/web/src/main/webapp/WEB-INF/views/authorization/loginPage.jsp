@@ -41,14 +41,14 @@
         Login:
       </div>
       <div class="input">
-        <form:input path="login" tabindex="1" /> ${msgLogin}
+        <form:input path="login" tabindex="1" />${msgLogin}
       </div>
       <br />
       <div class="label">
         Password:
       </div>
       <div class="input">
-        <form:password path="pass" tabindex="2" /> ${msgPass}
+        <form:password path="pass" tabindex="2" />${msgPass}
       </div>
       <br />
       <div class="label">

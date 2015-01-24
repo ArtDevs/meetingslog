@@ -3,7 +3,6 @@ package org.artdevs.meetingslog.core.dao.impl;
 import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Role;
 import org.artdevs.meetingslog.core.model.User;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,6 +38,9 @@ public class UserSqlDao implements UserDAO{
                     res.getString("firstName"),
                     res.getString("secondName"),
                     res.getString("email"),
+                    res.getString("address"),
+                    res.getString("phoneNumber1"),
+                    res.getString("phoneNumber2"),
                     res.getString("comment"),
                     res.getDate("tmLastLogin"),
                     res.getDate("tmRegistered")
@@ -51,9 +52,9 @@ public class UserSqlDao implements UserDAO{
         @Override
         public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Role(
-                rs.getInt("id"),
-                rs.getString("name"),
-                rs.getString("description"),
+                rs.getInt("role_id"),
+                rs.getString("role_name"),
+                rs.getString("role_description"),
                 rs.getInt("permissions")
             );
         }
@@ -61,14 +62,14 @@ public class UserSqlDao implements UserDAO{
 
     @Override
     public List<User> getAll(){
-        final String qryStr="SELECT * FROM ml_users_roles";
+        final String qryStr="SELECT * FROM ml_users";
 
         return namedParamTemplate.query(qryStr, userRowMapper);
     }
 
     @Override
     public List<User> getByEmail(String email) {
-        final String qryStr="SELECT * FROM ml_users_roles WHERE email=:email";
+        final String qryStr="SELECT * FROM ml_users WHERE email=:email";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("email",email);
@@ -78,7 +79,7 @@ public class UserSqlDao implements UserDAO{
 
     @Override
     public User findById(int id) {
-        final String qryStr="SELECT * FROM ml_users_roles WHERE id=:id";
+        final String qryStr="SELECT * FROM ml_users WHERE id=:id";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("id",id);
@@ -104,9 +105,11 @@ public class UserSqlDao implements UserDAO{
     public void insert(User user) {
         StringBuilder qryStrBuilder=new StringBuilder();
         qryStrBuilder.append("INSERT INTO ml_users ");
-        qryStrBuilder.append("(login,password,firstName,secondName,email,comment,tmLastLogin,tmRegistered)");
+        qryStrBuilder.append("(login,password,firstName,secondName,email,address,phoneNumber1,phoneNumber2," +
+                "comment,tmLastLogin,tmRegistered)");
         qryStrBuilder.append(" VALUES ");
-        qryStrBuilder.append("(:login,:password,:firstName,:secondName,:email,:comment,:tmLastLogin,:tmRegistered)");
+        qryStrBuilder.append("(:login,:password,:firstName,:secondName,:email,:address,:phoneNumber1,:phoneNumber2," +
+                ":comment,:tmLastLogin,:tmRegistered)");
 
         final String qryStr=qryStrBuilder.toString();
 
@@ -117,6 +120,9 @@ public class UserSqlDao implements UserDAO{
         mapPars.put("firstName", user.getFirstName());
         mapPars.put("secondName", user.getSecondName());
         mapPars.put("email", user.getEmail());
+        mapPars.put("address", user.getAddress());
+        mapPars.put("phoneNumber1", user.getPhoneNumber1());
+        mapPars.put("phoneNumber2", user.getPhoneNumber2());
         mapPars.put("comment", user.getComment());
         mapPars.put("tmLastLogin", user.getTmLastLogin());
         mapPars.put("tmRegistered", user.getTmRegistered());
@@ -133,6 +139,7 @@ public class UserSqlDao implements UserDAO{
         StringBuilder qryStrBuilder=new StringBuilder();
         qryStrBuilder.append("UPDATE ml_users SET ");
         qryStrBuilder.append("login=:login,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
+        qryStrBuilder.append("address=:address,phoneNumber1=:phoneNumber1,phoneNumber2=:phoneNumber2,");
         qryStrBuilder.append("comment=:comment,tmLastLogin=:tmLastLogin,tmRegistered=:tmRegistered");
         qryStrBuilder.append(" WHERE id=:id");
 
@@ -146,6 +153,9 @@ public class UserSqlDao implements UserDAO{
         mapPars.put("firstName", user.getFirstName());
         mapPars.put("secondName", user.getSecondName());
         mapPars.put("email", user.getEmail());
+        mapPars.put("address", user.getEmail());
+        mapPars.put("phoneNumber1", user.getEmail());
+        mapPars.put("phoneNumber2", user.getEmail());
         mapPars.put("comment", user.getComment());
         mapPars.put("tmLastLogin", user.getTmLastLogin());
         mapPars.put("tmRegistered", user.getTmRegistered());
@@ -158,6 +168,7 @@ public class UserSqlDao implements UserDAO{
         StringBuilder qryStrBuilder=new StringBuilder();
         qryStrBuilder.append("UPDATE ml_users SET ");
         qryStrBuilder.append("id=:id,password=:password,firstName=:firstName,secondName=:secondName,email=:email,");
+        qryStrBuilder.append("address=:address,phoneNumber1=:phoneNumber1,phoneNumber2=:phoneNumber2,");
         qryStrBuilder.append("comment=:comment,tmLastLogin=:tmLastLogin,tmRegistered=:tmRegistered");
         qryStrBuilder.append(" WHERE login=:login");
 
@@ -171,6 +182,9 @@ public class UserSqlDao implements UserDAO{
         mapPars.put("firstName", user.getFirstName());
         mapPars.put("secondName", user.getSecondName());
         mapPars.put("email", user.getEmail());
+        mapPars.put("address", user.getEmail());
+        mapPars.put("phoneNumber1", user.getEmail());
+        mapPars.put("phoneNumber2", user.getEmail());
         mapPars.put("comment", user.getComment());
         mapPars.put("tmLastLogin", user.getTmLastLogin());
         mapPars.put("tmRegistered", user.getTmRegistered());
@@ -234,8 +248,13 @@ public class UserSqlDao implements UserDAO{
     }
 
     @Override
-    public void getUserRoles(User user) {
+    public List<Role> getUserRoles(User user) {
+        final String qryStr="SELECT * FROM ml_users_roles WHERE user_id=:user_id";
 
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+        mapPars.put("user_id",user.getId());
+
+        return namedParamTemplate.query(qryStr,mapPars, roleRowMapper);
     }
 
     @Override
@@ -244,4 +263,5 @@ public class UserSqlDao implements UserDAO{
 
         return usr.getPassword().equals(password);
     }
+
 }

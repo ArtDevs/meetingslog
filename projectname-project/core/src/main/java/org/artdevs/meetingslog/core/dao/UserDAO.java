@@ -23,7 +23,7 @@ public interface UserDAO {
     public void removeById(int id);
     public void removeByLogin(String login);
 
-    public void getUserRoles(User user);
+    public List<Role> getUserRoles(User user);
 
     public void addRole(User user, Role role);
     public void removeRole(User user, Role role);

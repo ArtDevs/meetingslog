@@ -4,9 +4,10 @@ package org.artdevs.meetingslog.core.model;
  * Created by Slava on 13.01.2015.
  */
 public class Message {
-    Integer id;
-    Boolean readonly;
-    String msg_text;
+    protected int id;
+    protected boolean readonly;
+    protected String msg_text;
+    protected int ownerId;
 
     public Message(int id, boolean readonly, String msg_text) {
         this.id=id;
@@ -14,19 +15,19 @@ public class Message {
         this.msg_text=msg_text;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Boolean getReadonly() {
+    public boolean getReadonly() {
         return readonly;
     }
 
-    public void setReadonly(Boolean readonly) {
+    public void setReadonly(boolean readonly) {
         this.readonly = readonly;
     }
 
@@ -36,6 +37,18 @@ public class Message {
 
     public void setMsg_text(String msg_text) {
         this.msg_text = msg_text;
+    }
+
+    public boolean isReadonly() {
+        return readonly;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
     @Override

@@ -1,61 +1,56 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: artlaber
-  Date: 20.12.14
-  Time: 16:52
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+         pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-    <title>Login page</title>
-  <style type="text/css">
-    div.authData {
-      display: table;
-      width: auto;
-      height: auto;
-      margin: 0px auto;
+  <title>Login Page For Security</title>
+  <style>
+    .errorblock {
+      color: #ff0000;
+      background-color: #ffEEEE;
+      border: 3px solid #ff0000;
+      padding: 8px;
+      margin: 16px;
     }
-
-    div.label, div.input{
-      display: inline-block;
-      float: left;
-      width: auto;
-      height: auto;
-      margin: 5px 20px;
-    }
-
-    div.label { text-align: right; min-width: 100px; }
-    div.input { text-align: left; }
-
-    br { clear: both; }
   </style>
 </head>
-<body style="vertical-align: middle;">
+<body onload='document.f.j_username.focus();'>
+<h3>Login with Username and Password (Custom Login Page)</h3>
 
-  <form:form action="/login" method="post" modelAttribute="loginForm">
-    <div class="authData">
-      <div class="label">
-        Login:
-      </div>
-      <div class="input">
-        <form:input path="login" tabindex="1" />${msgLogin}
-      </div>
-      <br />
-      <div class="label">
-        Password:
-      </div>
-      <div class="input">
-        <form:password path="pass" tabindex="2" />${msgPass}
-      </div>
-      <br />
-      <div class="label">
-        <input type="submit" value="Go!" tabindex="3"/>
-      </div>
-    </div>
-  </form:form>
+<c:if test="${not empty error}">
+  <div class="errorblock">
+    Your login attempt was not successful, try again.
+    Caused :
+      ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+  </div>
+</c:if>
 
+<form name='f' action="<c:url value='j_spring_security_check' />"
+      method='POST'>
+
+  <table>
+    <tr>
+      <td>User:</td>
+      <td><input type='text' name='j_username' value=''>
+      </td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td><input type='password' name='j_password' />
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2'><input name="submit" type="submit"
+                             value="submit" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan='2'><input name="reset" type="reset" />
+      </td>
+    </tr>
+  </table>
+
+</form>
 </body>
 </html>

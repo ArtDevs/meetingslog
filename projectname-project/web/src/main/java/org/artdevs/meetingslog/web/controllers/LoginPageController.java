@@ -7,6 +7,7 @@ import org.artdevs.meetingslog.web.forms.LoginForm;
 import org.artdevs.meetingslog.web.forms.NewUserForm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -66,5 +67,20 @@ public class LoginPageController {
     public String processForgot(final Model model) {
 
         return WebConstants.FORGOT_PASSWORD_PAGE;
+    }
+
+    @RequestMapping(value="/fail2login", method = RequestMethod.GET)
+    public String loginerror(ModelMap model) {
+
+        model.addAttribute("error", "true");
+        return WebConstants.LOGIN_PAGE;
+
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logout(ModelMap model) {
+
+        return WebConstants.LOGIN_PAGE;
+
     }
 }

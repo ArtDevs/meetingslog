@@ -80,14 +80,14 @@ public class MessageServiceImpl implements MessageService {
     }
 
     public List<Message> getMessagesByGroup(String groupId) {
-        List<Message> msgList = new ArrayList<Message>();
-        if (userDAO.findById(Integer.valueOf(groupId)) != null) {
-            msgList  = messageDAO.getByUser(userDAO.findById(Integer.valueOf(groupId)));        //we don't have method getByGroup
-            return msgList;                                                                     //so I make this byUser for now
-        }
-        else{
-            return msgList = null;
-        }
+        throw new UnsupportedOperationException("getMessagesByGroup Not yet implemented!!");
+//        List<Message> msgList;
+//        if (userDAO.findById(Integer.valueOf(groupId)) != null) {
+//            msgList = messageDAO.getByUser(userDAO.findById(Integer.valueOf(groupId)));        //we don't have method getByGroup
+//            return msgList;                                                                     //so I make this byUser for now
+//        } else {
+//            return msgList = null;
+//        }
     }
 
     public boolean isMessageEditable(String msgId) {

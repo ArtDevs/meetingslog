@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -37,8 +38,9 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	public void removeMessages(String owner) {
-		if (userDAO.findByLogin(owner) != null)
-			messageDAO.removeByUser(userDAO.findByLogin(owner));
+        User user = userDAO.findByLogin(owner);
+		if ( user!= null)
+			messageDAO.removeByUser(user);
 	}
 
 	public void removeMessages(User owner) {
@@ -54,8 +56,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	public void editMessage(String messageId, String newMessageBody) {
-		if (messageDAO.findById(Integer.valueOf(messageId)) != null && !(messageDAO.findById(Integer.valueOf(messageId)).isReadonly())) {
-			Message msg = messageDAO.findById(Integer.valueOf(messageId));
+        Message msg = messageDAO.findById(Integer.valueOf(messageId));
+		if (msg != null && !(msg.isReadonly())) {
 			msg.setMsg_text(newMessageBody);
 		} else {
 			System.out.println("Can't edit message");
@@ -68,28 +70,23 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	public List<Message> getMessagesByOwner(String ownerId) {
-		List<Message> msgList = new ArrayList<Message>();
-		if (userDAO.findById(Integer.valueOf(ownerId)) != null) {
-			msgList = messageDAO.getByUser(userDAO.findById(Integer.valueOf(ownerId)));
+		List<Message> msgList;
+        User user = userDAO.findById(Integer.valueOf(ownerId));
+		if (user != null) {
+			msgList = messageDAO.getByUser(user);
 			return msgList;
 		} else {
-			return msgList = null;
+			return Collections.emptyList();
 		}
 	}
 
 	public List<Message> getMessagesByGroup(String groupId) {
 		throw new UnsupportedOperationException("getMessagesByGroup Not yet implemented!!");
-//        List<Message> msgList;
-//        if (userDAO.findById(Integer.valueOf(groupId)) != null) {
-//            msgList = messageDAO.getByUser(userDAO.findById(Integer.valueOf(groupId)));        //we don't have method getByGroup
-//            return msgList;                                                                     //so I make this byUser for now
-//        } else {
-//            return msgList = null;
-//        }
 	}
 
 	public boolean isMessageEditable(String msgId) {
-		if (messageDAO.findById(Integer.valueOf(msgId)) != null && !(messageDAO.findById(Integer.valueOf(msgId)).isReadonly())) {
+        Message msg = messageDAO.findById(Integer.valueOf(msgId));
+		if (msg != null && !(msg.isReadonly())) {
 			return true;
 		} else {
 			return false;

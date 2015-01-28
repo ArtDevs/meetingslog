@@ -87,7 +87,7 @@ public class GroupSqlDAO implements GroupDAO {
 
         mapPars.put("id",group.getId());
         mapPars.put("name", group.getName());
-        mapPars.put("msg_text", group.getOwner_id());
+        mapPars.put("owner_id", group.getOwner_id());
 
         namedParamTemplate.update(qryStr, mapPars);
     }

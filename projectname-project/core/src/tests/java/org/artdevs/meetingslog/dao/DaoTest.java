@@ -60,6 +60,8 @@ public class DaoTest extends TestCase {
 
     @Test
     public void testInsert ()throws Exception {
+        final int beforeTestQuant=userDAO.getAll().size();
+
         User testUser = new User();
 
         Role testRole = new Role();
@@ -79,12 +81,12 @@ public class DaoTest extends TestCase {
 
         userDAO.insert(testUser);
 
-        assertEquals(1, userDAO.getAll().size());
+        assertEquals(beforeTestQuant+1, userDAO.getAll().size());
 
         userDAO.removeByLogin(testUser.getLogin());
         roleDAO.removeByName(testRole.getName());
 
-        assertEquals(0, userDAO.getAll().size());
+        assertEquals(beforeTestQuant, userDAO.getAll().size());
 //        assertEquals(0,roleDAO.getAll().size());
     }
 
@@ -92,31 +94,33 @@ public class DaoTest extends TestCase {
     public void testGetAll() throws Exception {
 
         final int testQuant=10;
+        final int beforeTestQuant=userDAO.getAll().size();
 
         prepareData(testQuant);
 
-        assertEquals(testQuant,userDAO.getAll().size());
+        assertEquals(testQuant+beforeTestQuant,userDAO.getAll().size());
 
         cleanData(testQuant);
 
-        assertEquals(0,userDAO.getAll().size());
+        assertEquals(beforeTestQuant,userDAO.getAll().size());
 //        assertEquals(0,roleDAO.getAll().size());
     }
     @Test
     public void testGetByEmail() throws Exception {
 
         final int testQuant=5;
+        final int beforeTestQuant=userDAO.getAll().size();
 
         prepareData(testQuant);
 
-        assertEquals(userDAO.getByEmail("test@email.none").size(), userDAO.getAll().size());
+        assertEquals(beforeTestQuant+userDAO.getByEmail("test@email.none").size(), userDAO.getAll().size());
 
         User testUser=userDAO.findByLogin("testLogin"+(testQuant-1));
 
         testUser.setEmail("test@email.none5");
         userDAO.updateByLogin(testUser);
 
-        assertEquals(userDAO.getByEmail("test@email.none").size(),userDAO.getAll().size()-1);
+        assertEquals(beforeTestQuant+userDAO.getByEmail("test@email.none").size()+1,userDAO.getAll().size());
 
         cleanData(testQuant);
 
@@ -128,6 +132,7 @@ public class DaoTest extends TestCase {
     public void testFindById() throws Exception {
         User testUser;
         final int testQuant=5;
+        //final int beforeTestQuant=userDAO.getAll().size();
 
         prepareData(testQuant);
 
@@ -145,6 +150,7 @@ public class DaoTest extends TestCase {
     public void testFindByLogin() throws Exception {
         User testUser;
         final int testQuant=5;
+        //final int beforeTestQuant=userDAO.getAll().size();
 
         prepareData(testQuant);
 

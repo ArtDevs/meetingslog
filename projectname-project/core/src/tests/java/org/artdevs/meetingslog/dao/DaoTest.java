@@ -1,7 +1,6 @@
 package org.artdevs.meetingslog.dao;
 
 import junit.framework.TestCase;
-import org.artdevs.meetingslog.core.dao.InitDB;
 import org.artdevs.meetingslog.core.dao.RoleDAO;
 import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Role;
@@ -9,13 +8,8 @@ import org.artdevs.meetingslog.core.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import java.sql.SQLException;
-
-import javax.annotation.PostConstruct;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:META-INF/custom-config/core-custom-spring.xml")
@@ -27,19 +21,7 @@ public class DaoTest extends TestCase {
     @Autowired
     private RoleDAO roleDAO;
 
-    @Autowired
-    private InitDB initDB;
-
-    @PostConstruct
-    public void init(){
-        try {
-            initDB.initialize();
-        }catch (SQLException e){
-            System.out.println(e.getSQLState());
-        }
-    }
-
-    public void prepareData(final int testQuant){
+     public void prepareData(final int testQuant){
         User testUser = new User();
         Role testRole = new Role();
 

@@ -13,6 +13,9 @@
 
 	<mvc:annotation-driven />
 
+	<mvc:resources mapping="/css/**" location="/_ui/css/" />
+	<mvc:resources mapping="/js/**" location="/_ui/js/" />
+
 	<context:component-scan base-package="org.artdevs.meetingslog" />
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

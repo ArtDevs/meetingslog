@@ -5,18 +5,10 @@
 <html>
 <head>
   <title>Login Page For Security</title>
-  <style>
-    .errorblock {
-      color: #ff0000;
-      background-color: #ffEEEE;
-      border: 3px solid #ff0000;
-      padding: 8px;
-      margin: 16px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="css/main.css"/>
 </head>
-<body onload='document.f.j_username.focus();'>
-<h3>Login with Username and Password (Custom Login Page)</h3>
+
+<body>
 
 <c:if test="${not empty error}">
   <div class="errorblock">
@@ -26,31 +18,60 @@
   </div>
 </c:if>
 
-<form name='f' action="<c:url value='j_spring_security_check' />"
-      method='POST'>
+<div class="contentBar">
+  <header class="headerBar">
+    <div class="headerContent">
+      <div class="headerLeftCell">
+        <b>LeftHeader</b>
+      </div>
+      <div class="headerRightCell">
+        <b>HeaderRight</b>
+      </div>
+    </div>
+  </header>
+  <div class="mainContent">
 
-  <table>
-    <tr>
-      <td>User:</td>
-      <td><input type='text' name='j_username' value=''>
-      </td>
-    </tr>
-    <tr>
-      <td>Password:</td>
-      <td><input type='password' name='j_password' />
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'><input name="submit" type="submit"
-                             value="submit" />
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'><input name="reset" type="reset" />
-      </td>
-    </tr>
-  </table>
+    <c:url var="doLogin" value="/j_spring_security_check" />
+    <form name='f' action="${doLogin}" method='POST'>
+    <div style="display: inline; float: left; margin: 5px; width: 100px;">
+      <label class="inputLable">Login</label>
+    </div>
+    <div style="display: inline; float: left; margin: 5px;">
+      <input class="inputField" type="text" name="j_username" />
+    </div>
+    <br style="clear:both"/>
+    <div style="display: inline; float: left; margin: 5px; width: 100px;">
+      <label class="inputLable">Password</label>
+    </div>
+    <div style="display: inline; float: left; margin: 5px;">
+      <input class="inputField" type="password" name="j_password" />
+      <br style="clear:both"/><br style="clear:both"/>
+      <input class="inputFormButton" type="submit" value="Log in"/>
+    </div>
 
-</form>
+    </form>
+
+  </div>
+
+</div>
+
+<footer class="footerBar">
+  <div class="footerContent">
+    <div class="footerLeftCell">
+      <p>
+        designed and developed by<br/>
+        <sup>&copy;</sup>ArtDevs, 2015
+      </p>
+    </div>
+    <div class="footerMidCell">
+      FooterMid
+    </div>
+    <div class="footerRightCell">
+      FooterRight
+    </div>
+  </div>
+</footer>
+
 </body>
+
 </html>

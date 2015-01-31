@@ -7,8 +7,11 @@
 							  http://www.springframework.org/schema/beans
 							  http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<http pattern="/_ui/**" auto-config="true">
-		<intercept-url pattern="/_ui/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	<http pattern="/css/**" auto-config="true">
+		<intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	</http>
+	<http pattern="/js/**" auto-config="true">
+		<intercept-url pattern="/js/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 	</http>
 
 	<http pattern="/login**" auto-config="true">

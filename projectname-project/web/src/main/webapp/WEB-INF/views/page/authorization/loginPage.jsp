@@ -37,5 +37,8 @@
 
 		<%--buttons that submits our form for processing--%>
 		<input class="inputFormButton" type="submit" value="Log in"/>
+
+		<c:url var="registrationUrl" value="/register"/>
+		<a href="${registrationUrl}">Register here</a>
 	</div>
 </form>

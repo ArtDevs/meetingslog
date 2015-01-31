@@ -110,3 +110,8 @@ h1 {
 .inputFormButton:active {
 	background: #AAAAAA;
 }
+
+.loginError {
+	color: red;
+	font-weight: bolder;
+}

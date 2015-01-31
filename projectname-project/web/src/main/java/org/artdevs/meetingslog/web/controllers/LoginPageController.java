@@ -58,17 +58,17 @@ public class LoginPageController {
         }
     }
 
-    @RequestMapping(value = "/forgot", method = RequestMethod.GET)
-    public String forgotPassword(final Model model) {
-
-        return WebConstants.FORGOT_PASSWORD_PAGE;
-    }
-
-    @RequestMapping(value = "/forgot", method = RequestMethod.POST)
-    public String processForgot(final Model model) {
-
-        return WebConstants.FORGOT_PASSWORD_PAGE;
-    }
+//    @RequestMapping(value = "/forgot", method = RequestMethod.GET)
+//    public String forgotPassword(final Model model) {
+//
+//        return WebConstants.FORGOT_PASSWORD_PAGE;
+//    }
+//
+//    @RequestMapping(value = "/forgot", method = RequestMethod.POST)
+//    public String processForgot(final Model model) {
+//
+//        return WebConstants.FORGOT_PASSWORD_PAGE;
+//    }
 
     @RequestMapping(value="/fail2login", method = RequestMethod.GET)
     public String loginerror(ModelMap model) {

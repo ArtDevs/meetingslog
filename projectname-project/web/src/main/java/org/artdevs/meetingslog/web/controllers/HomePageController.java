@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Artem L.V. on 20.12.14.
  */
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomePageController {
 
     @RequestMapping(method = RequestMethod.GET)

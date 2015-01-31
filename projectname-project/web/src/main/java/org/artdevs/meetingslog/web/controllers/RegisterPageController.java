@@ -54,7 +54,7 @@ public class RegisterPageController {
             model.addAttribute("loginLink","login");
             model.addAttribute("signUpHeader","Here you can sign up as new guest user.");
             model.addAttribute("signUpLink","register");
-            return "hello";
+            return WebConstants.HOME_PAGE;
         }
         else {
             model.addAttribute("message","Login already used.");

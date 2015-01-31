@@ -16,12 +16,12 @@ public class AccountPageController {
     @RequestMapping(method = RequestMethod.GET)
     public String account(final Model model) {
 
-        return WebConstants.ACCOUNT_PAGE;
+        return WebConstants.HOME_PAGE;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editAccount(final Model model) {
 
-        return WebConstants.ACCOUNT_PAGE;
+        return WebConstants.HOME_PAGE;
     }
 }

@@ -7,18 +7,16 @@
 							  http://www.springframework.org/schema/beans
 							  http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<http pattern="/css/**" auto-config="true">
-		<intercept-url pattern="/css/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	</http>
-	<http pattern="/js/**" auto-config="true">
-		<intercept-url pattern="/js/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	</http>
-
-	<http pattern="/login**" auto-config="true">
-		<intercept-url pattern="/login**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	<http pattern="/_ui/**" auto-config="true" use-expressions="true">
+		<intercept-url pattern="/_ui/css/**" access="permitAll"/>
+		<intercept-url pattern="/_ui/js/**" access="permitAll"/>
 	</http>
 
 	<http pattern="/**" auto-config="true" use-expressions="true">
+
+		<intercept-url pattern="/login" access="permitAll"/>
+		<intercept-url pattern="/login/fail2login" access="permitAll"/>
+
 		<intercept-url pattern="/**" access="hasAnyRole('admin', 'guest')"/>
 		<form-login login-page="/login"
 		            default-target-url="/home"

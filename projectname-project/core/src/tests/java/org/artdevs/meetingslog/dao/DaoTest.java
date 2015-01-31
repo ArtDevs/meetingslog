@@ -12,7 +12,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:META-INF/custom-config/core-custom-spring.xml")
+@ContextConfiguration(
+        {
+                "classpath*:/META-INF/custom-config/*-custom-spring.xml",
+                "classpath*:/META-INF/config/meetingslog-*-config.xml"
+        }
+)
 public class DaoTest extends TestCase {
 
     @Autowired

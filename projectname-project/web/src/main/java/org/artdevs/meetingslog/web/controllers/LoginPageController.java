@@ -77,11 +77,4 @@ public class LoginPageController {
         return WebConstants.LOGIN_PAGE;
 
     }
-
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logout(ModelMap model) {
-
-        return WebConstants.LOGIN_PAGE;
-
-    }
 }

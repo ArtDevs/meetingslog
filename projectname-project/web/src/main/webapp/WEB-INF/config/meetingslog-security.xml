@@ -7,15 +7,20 @@
 							  http://www.springframework.org/schema/beans
 							  http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<http auto-config="true" >
-		<intercept-url pattern="/logs**" access="ROLE_USER"/>
-		<form-login login-page="/login"
-					default-target-url="/"
-					authentication-failure-url="/login/fail2login"/>
-		<logout logout-success-url="/logout"/>
+	<http pattern="/_ui/**" auto-config="true">
+		<intercept-url pattern="/_ui/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	</http>
 
-		<intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-		<intercept-url pattern="/welcome" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	<http pattern="/login**" auto-config="true">
+		<intercept-url pattern="/login**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+	</http>
+
+	<http pattern="/**" auto-config="true" use-expressions="true">
+		<intercept-url pattern="/**" access="hasAnyRole('admin', 'guest')"/>
+		<form-login login-page="/login"
+		            default-target-url="/home"
+		            authentication-failure-url="/login/fail2login"/>
+		<logout logout-url="/logout" logout-success-url="/" delete-cookies="JSESSIONID"/>
 	</http>
 
 	<authentication-manager>

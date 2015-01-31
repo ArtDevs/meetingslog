@@ -32,23 +32,24 @@ public class MessageSqlDao implements MessageDAO{
         @Override
         public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new Message(
-                    rs.getInt("msg_id"),
-                    rs.getBoolean("msg_readonly"),
+                    rs.getInt("id"),
+                    rs.getBoolean("readonly"),
                     rs.getString("msg_title"),
-                    rs.getString("msg_text")
+                    rs.getString("msg_text"),
+                    rs.getInt("owner_id")
             );
         }
     };
 
     @Override
     public List<Message> getAll() {
-        final String qryStr="SELECT * FROM ml_user_messages";
+        final String qryStr="SELECT * FROM ml_messages";
         return namedParamTemplate.query(qryStr, msgRowMapper);
     }
 
     @Override
     public List<Message> getByUser(User user) {
-        final String qryStr="SELECT * FROM ml_user_messages WHERE owner_id=:owner_id";
+        final String qryStr="SELECT * FROM ml_messages WHERE owner_id=:owner_id";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
         mapPars.put("owner_id",user.getId());
@@ -71,10 +72,10 @@ public class MessageSqlDao implements MessageDAO{
     @Override
     public void insert(Message message) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("INSERT INTO ml_message ");
-        qryStrBuilder.append("(readonly,msg_title,msg_text)");
+        qryStrBuilder.append("INSERT INTO ml_messages ");
+        qryStrBuilder.append("(readonly,msg_title,msg_text,owner_id)");
         qryStrBuilder.append(" VALUES ");
-        qryStrBuilder.append("(:readonly,:msg_title,:msg_text)");
+        qryStrBuilder.append("(:readonly,:msg_title,:msg_text,:owner_id)");
 
         final String qryStr=qryStrBuilder.toString();
 
@@ -83,6 +84,7 @@ public class MessageSqlDao implements MessageDAO{
         mapPars.put("readonly", message.getReadonly());
         mapPars.put("msg_title", message.getMsg_title());
         mapPars.put("msg_text", message.getMsg_text());
+        mapPars.put("owner_id", message.getOwnerId());
 
         KeyHolder lastId=new GeneratedKeyHolder();
         SqlParameterSource pars=new MapSqlParameterSource(mapPars);
@@ -94,8 +96,8 @@ public class MessageSqlDao implements MessageDAO{
     @Override
     public void updateById(Message message) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("UPDATE ml_message SET ");
-        qryStrBuilder.append("readonly=:readonly,msg_title=:msg_title,msg_text=:msg_text");
+        qryStrBuilder.append("UPDATE ml_messages SET ");
+        qryStrBuilder.append("readonly=:readonly,msg_title=:msg_title,msg_text=:msg_text,owner_id=:owner_id");
         qryStrBuilder.append(" WHERE id=:id ");
 
         final String qryStr=qryStrBuilder.toString();
@@ -106,6 +108,7 @@ public class MessageSqlDao implements MessageDAO{
         mapPars.put("readonly", message.getReadonly());
         mapPars.put("msg_title", message.getMsg_title());
         mapPars.put("msg_text", message.getMsg_text());
+        mapPars.put("owner_id", message.getOwnerId());
 
         namedParamTemplate.update(qryStr, mapPars);
     }
@@ -117,7 +120,7 @@ public class MessageSqlDao implements MessageDAO{
 
         mapPars.put("id",id);
 
-        final String qryStr="DELETE FROM ml_mesages WHERE id=:id";
+        final String qryStr="DELETE FROM ml_messages WHERE id=:id";
 
         namedParamTemplate.update(qryStr,mapPars);
 
@@ -137,7 +140,7 @@ public class MessageSqlDao implements MessageDAO{
     @Override
     public void toggleReadonly(Message message, boolean status) {
         StringBuilder qryStrBuilder=new StringBuilder();
-        qryStrBuilder.append("UPDATE ml_message SET ");
+        qryStrBuilder.append("UPDATE ml_messages SET ");
         qryStrBuilder.append("readonly=:readonly");
         qryStrBuilder.append(" WHERE id=:id ");
 

@@ -10,11 +10,16 @@ public class Message {
     protected String msg_title;
     protected int ownerId;
 
-    public Message(int id, boolean readonly, String msg_title, String msg_text) {
+    public Message(int ownerId){
+        this.ownerId=ownerId;
+    }
+
+    public Message(int id, boolean readonly, String msg_title, String msg_text, int ownerId) {
         this.id=id;
         this.readonly=readonly;
         this.msg_title=msg_title;
         this.msg_text=msg_text;
+        this.ownerId=ownerId;
     }
 
     public int getId() {

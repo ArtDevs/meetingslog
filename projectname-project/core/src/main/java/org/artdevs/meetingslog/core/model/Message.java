@@ -7,11 +7,13 @@ public class Message {
     protected int id;
     protected boolean readonly;
     protected String msg_text;
+    protected String msg_title;
     protected int ownerId;
 
-    public Message(int id, boolean readonly, String msg_text) {
+    public Message(int id, boolean readonly, String msg_title, String msg_text) {
         this.id=id;
         this.readonly=readonly;
+        this.msg_title=msg_title;
         this.msg_text=msg_text;
     }
 
@@ -39,6 +41,14 @@ public class Message {
         this.msg_text = msg_text;
     }
 
+    public String getMsg_title() {
+        return msg_title;
+    }
+
+    public void setMsg_title(String msg_title) {
+        this.msg_title = msg_title;
+    }
+
     public boolean isReadonly() {
         return readonly;
     }
@@ -53,6 +63,6 @@ public class Message {
 
     @Override
     public String toString() {
-        return msg_text;
+        return msg_title;
     }
 }

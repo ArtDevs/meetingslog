@@ -2,29 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:context="http://www.springframework.org/schema/context"
-	   xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
 	   						http://www.springframework.org/schema/beans/spring-beans.xsd
 	   						http://www.springframework.org/schema/context
-	   						http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+	   						http://www.springframework.org/schema/context/spring-context.xsd
+	   						">
 
 	<context:component-scan base-package="org.artdevs.meetingslog"/>
-	<context:property-placeholder location="classpath:META-INF/data/jdbc.conf"/>
-
-	<bean id="dataSrc" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="url" value="${jdbc.url}"/>
-		<property name="driverClassName" value="${jdbc.drvName}"/>
-		<property name="username" value="${jdbc.username}"/>
-		<property name="password" value="${jdbc.pass}"/>
-
-	</bean>
-
-	<jdbc:initialize-database data-source="dataSrc">
-		<jdbc:script location="${jdbc.schema}"/>
-	</jdbc:initialize-database>
-
-	<bean id="namedParamTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-		<constructor-arg type="javax.sql.DataSource" ref="dataSrc"/>
-	</bean>
 
 </beans>

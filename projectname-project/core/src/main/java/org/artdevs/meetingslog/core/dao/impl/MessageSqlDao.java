@@ -34,6 +34,7 @@ public class MessageSqlDao implements MessageDAO{
             return new Message(
                     rs.getInt("msg_id"),
                     rs.getBoolean("msg_readonly"),
+                    rs.getString("msg_title"),
                     rs.getString("msg_text")
             );
         }
@@ -42,7 +43,6 @@ public class MessageSqlDao implements MessageDAO{
     @Override
     public List<Message> getAll() {
         final String qryStr="SELECT * FROM ml_user_messages";
-
         return namedParamTemplate.query(qryStr, msgRowMapper);
     }
 
@@ -72,15 +72,16 @@ public class MessageSqlDao implements MessageDAO{
     public void insert(Message message) {
         StringBuilder qryStrBuilder=new StringBuilder();
         qryStrBuilder.append("INSERT INTO ml_message ");
-        qryStrBuilder.append("(readonly,msg_text)");
+        qryStrBuilder.append("(readonly,msg_title,msg_text)");
         qryStrBuilder.append(" VALUES ");
-        qryStrBuilder.append("(:readonly,:msg_text)");
+        qryStrBuilder.append("(:readonly,:msg_title,:msg_text)");
 
         final String qryStr=qryStrBuilder.toString();
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
         mapPars.put("readonly", message.getReadonly());
+        mapPars.put("msg_title", message.getMsg_title());
         mapPars.put("msg_text", message.getMsg_text());
 
         KeyHolder lastId=new GeneratedKeyHolder();
@@ -94,7 +95,7 @@ public class MessageSqlDao implements MessageDAO{
     public void updateById(Message message) {
         StringBuilder qryStrBuilder=new StringBuilder();
         qryStrBuilder.append("UPDATE ml_message SET ");
-        qryStrBuilder.append("readonly=:readonly,msg_text=:msg_text");
+        qryStrBuilder.append("readonly=:readonly,msg_title=:msg_title,msg_text=:msg_text");
         qryStrBuilder.append(" WHERE id=:id ");
 
         final String qryStr=qryStrBuilder.toString();
@@ -103,6 +104,7 @@ public class MessageSqlDao implements MessageDAO{
 
         mapPars.put("id",message.getId());
         mapPars.put("readonly", message.getReadonly());
+        mapPars.put("msg_title", message.getMsg_title());
         mapPars.put("msg_text", message.getMsg_text());
 
         namedParamTemplate.update(qryStr, mapPars);

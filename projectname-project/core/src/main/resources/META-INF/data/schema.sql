@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS ml_messages (
   id INTEGER PRIMARY KEY AUTO_INCREMENT,
   owner_id INTEGER NOT NULL REFERENCES ml_users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   readonly BOOL NOT NULL DEFAULT FALSE,
-  msg_text TEXT
+  msg_text TEXT,
+  msg_title VARCHAR(500)
 );
 
 CREATE OR REPLACE VIEW ml_user_messages AS
@@ -55,8 +56,10 @@ CREATE OR REPLACE VIEW ml_user_messages AS
     User.tmLastLogin AS tmLastLogin,
     User.tmRegistered AS tmRegistered,
     Msg.id AS msg_id,
+    Msg.owner_id AS msg_owner_id,
     Msg.readonly AS msg_readonly,
-    Msg.msg_text AS msg_text
+    Msg.msg_text AS msg_text,
+    Msg.msg_title AS msg_title
   FROM
     ml_users AS User
     LEFT JOIN
@@ -123,9 +126,9 @@ VALUES
 ON DUPLICATE KEY UPDATE permissions=permissions;
 
 INSERT INTO ml_users
-(login, password, firstName, secondName, email, address,phoneNumber1,phoneNumber2,comment)
+(login, password, firstName, secondName, email, address,phoneNumber1,phoneNumber2,comment,tmLastLogin,tmRegistered)
     VALUES
-("admin","admin","","","","","","","Default administartive account.")
+("admin","admin","","","","","","","Default administartive account.",CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)
 ON DUPLICATE KEY UPDATE password=password;
 
 INSERT INTO ml_user_role_ref

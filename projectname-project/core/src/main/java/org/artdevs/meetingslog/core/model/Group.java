@@ -8,6 +8,9 @@ public class Group {
     private String name;
     private int owner_id;
 
+    public Group(){
+    }
+
     public Group(int id,String name, int owner_id){
         this.id=id;
         this.name=name;

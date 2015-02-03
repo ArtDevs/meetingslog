@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by Slava on 24.01.2015.
  */
+@Component
 public class GroupSqlDAO implements GroupDAO {
 
     @Autowired
@@ -55,15 +57,18 @@ public class GroupSqlDAO implements GroupDAO {
         Map<String,Object> params=new HashMap<String,Object>();
         params.put("id",id);
 
-        return namedParamTemplate.queryForObject(qryStr, params, groupRowMapper);
+        try {
+            return namedParamTemplate.queryForObject(qryStr, params, groupRowMapper);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
     public void insert(Group group) {
-        final String qryStr="INSERT INTO ml_groups (id,name,owner_id) VALUES (:id,:name,:owner_id)";
+        final String qryStr="INSERT INTO ml_groups (name,owner_id) VALUES (:name,:owner_id)";
 
         Map<String,Object> params= new HashMap<>();
-        params.put("id",group.getId());
         params.put("name",group.getName());
         params.put("owner_id",group.getOwner_id());
 

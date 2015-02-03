@@ -107,8 +107,9 @@ public class MessageFacadeTest {
         assertFalse("Editing message is failed", oldEditableTextMsg.equals(newEditableTextMsg));
 
         /*String oldNotEditableTextMsg = newNotEditableMessage.getMsg_text();*/
-        messageFacade.editMessage(newNotEditableMessage, "New Text");
         exception.expect(Exception.class);
+        messageFacade.editMessage(newNotEditableMessage, "New Text");
+
         /*String newNotEditableTextMsg = newNotEditableMessage.getMsg_text();*/
 
 

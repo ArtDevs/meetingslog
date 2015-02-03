@@ -5,7 +5,6 @@ import org.artdevs.meetingslog.core.model.Message;
 import org.artdevs.meetingslog.core.model.User;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,15 +122,45 @@ public class MessageSqlDaoTest extends TestCase {
         insertedIDs.remove(numTestMsg-1);
     }
 
-    @Ignore
     @Test
     public void testRemoveByUser() throws Exception {
+        User user1=new User();
+        user1.setLogin("testUserDelme");
+        user1.setEmail("test@delme.usr");
+        user1.setAddress("unknown address");
+        user1.setPhoneNumber1("11111111111");
+        user1.setPhoneNumber2("22222222222");
+        user1.setComment("User for testing message DAO");
+        user1.setSecondName("Userman");
+        user1.setFirstName("Delme");
+        user1.setPassword("123qwe");
 
+        try {
+            userSqlDao.insert(user1);
+        }catch (RuntimeException e){
+            user1.setLogin("testUserDelme1");
+            userSqlDao.insert(user1);
+        }
+
+        for (Integer i:insertedIDs){
+            Message msg=messageSqlDao.findById(i);
+            msg.setOwnerId(user1.getId());
+            messageSqlDao.updateById(msg);
+        }
+
+        messageSqlDao.removeByUser(user1);
+        userSqlDao.removeById(user1.getId());
+
+        assertEquals(numInitMsg, messageSqlDao.getAll().size());
     }
 
-    @Ignore
     @Test
     public void testToggleReadonly() throws Exception {
-
+        for(Integer i:insertedIDs) {
+            Message msg=messageSqlDao.findById(i);
+            boolean ro=msg.getReadonly();
+            messageSqlDao.toggleReadonly(msg,!ro);
+            assertEquals(ro, !msg.getReadonly());
+        }
     }
 }

@@ -132,7 +132,7 @@ public class MessageSqlDao implements MessageDAO{
 
         mapPars.put("owner_id",user.getId());
 
-        final String qryStr="DELETE FROM ml_mesages WHERE owner_id=:owner_id";
+        final String qryStr="DELETE FROM ml_messages WHERE owner_id=:owner_id";
 
         namedParamTemplate.update(qryStr,mapPars);
     }
@@ -152,5 +152,6 @@ public class MessageSqlDao implements MessageDAO{
         mapPars.put("readonly", status);
 
         namedParamTemplate.update(qryStr, mapPars);
+        message.setReadonly(status);
     }
 }

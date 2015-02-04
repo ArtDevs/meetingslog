@@ -23,33 +23,50 @@ public class MessageFacadeImpl implements MessageFacade {
     @Autowired
     UserServices userServices;
 
-    public void createMessage(Message msg){}
+    public void createMessage(Message msg) {
+        messageService.createMessage(msg);
+    }
 
-    public void deleteMessage(Message msg){}
+    public void deleteMessage(Message msg) {
+        if (msg != null) {
+            messageService.removeMessage(msg);
+        }
+    }
 
-    public void editMessage(Message msg, String newMessageBody){}
+    public void editMessage(Message msg, String newMessageBody) {
+        Message msgFromDb = messageService.getMessageById(msg.getId());
+        if(msgFromDb != null && messageService.isMessageEditable(msgFromDb)){
+            messageService.editMessage(String.valueOf(msgFromDb.getId()), newMessageBody);
+        }
+    }
 
-    public List<Message> getMessagesByUser(User user){
-        List<Message> list = new ArrayList<>();
+    public List<Message> getMessagesByUser(User user) {
+        User userFromDb = userServices.findUserByName(user.getLogin());
+        List <Message> list = new ArrayList<>();
+        if(userFromDb != null){
+            list = messageService.getMessagesByOwner(String.valueOf(userFromDb.getId()));
+        }
         return list;
     }
 
-    public List<Message> getMessagesByGroup(String groupId){
-        List<Message> list = new ArrayList<>();
-        return list;
+    public List<Message> getMessagesByGroup(String groupId) {
+        throw new UnsupportedOperationException("getMessagesByGroup Not yet implemented!!");
     }
 
-    public List<Message> getMessagesByUserAndGroup(User user, String groupId){
-        List<Message> list = new ArrayList<>();
-        return list;
+    public List<Message> getMessagesByUserAndGroup(User user, String groupId) {
+        throw new UnsupportedOperationException("getMessagesByUserAndGroup Not yet implemented!!");
     }
 
-    public Message getMessagesById(int MessageId){
-        return
+    public Message getMessageById(int MessageId) {
+        Message msg;
+        msg = messageService.getMessageById(MessageId);
+        if(msg != null){
+            return msg;
+        }
+        else return null;
     }
 
-    public List<Message> getAllMessages(){
-        List<Message> list = new ArrayList<>();
-        return list;
+    public List<Message> getAllMessages() {
+        return messageService.getAllMessages();
     }
 }

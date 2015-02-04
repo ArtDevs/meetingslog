@@ -94,8 +94,8 @@ public class MessageFacadeTest {
         assertNotNull("This user don't have any massages",userMsgList);
 
 
-        Message newEditableMessage = messageFacade.getMessagesById(-1);    //work with our messages from BD
-        Message newNotEditableMessage = messageFacade.getMessagesById(-2);
+        Message newEditableMessage = messageFacade.getMessageById(-1);    //work with our messages from BD
+        Message newNotEditableMessage = messageFacade.getMessageById(-2);
 
         assertTrue("Test on editable of your message is failed", newEditableMessage.isReadonly());
         assertFalse("Test on not editable of your message is failed", newNotEditableMessage.isReadonly());
@@ -132,6 +132,11 @@ public class MessageFacadeTest {
     public void testGetMessagesByUser() {
         assertNotNull("Getting messages from DB by user is failed", messageFacade.getMessagesByUser(user));
 
+    }
+
+    @Test
+    public void testGetMessageById(){
+        assertNotNull("Getting messages from DB by user is failed", messageFacade.getMessageById(-1));
     }
 
     @Ignore

@@ -25,6 +25,8 @@ public interface MessageService {
 
 	public List<Message> getAllMessages();
 
+    public Message getMessageById(int MessageId);
+
 	public List<Message> getMessagesByOwner(String ownerId);
 
 	public List<Message> getMessagesByGroup(String groupId);

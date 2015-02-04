@@ -19,7 +19,7 @@ public interface MessageFacade {
 
     public List<Message> getMessagesByUser(User user);
 
-    public Message getMessagesById(int MessageId);
+    public Message getMessageById(int MessageId);
 
     public List<Message> getMessagesByGroup(String groupId);
 

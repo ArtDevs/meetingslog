@@ -10,10 +10,17 @@ import java.util.List;
  */
 public interface GroupDAO {
     public List<Group> getAll();
-    public List<Group> getByUser(User user);
+    public List<Group> getByOwner(User user);
     public Group findById(int id);
     public void insert(Group group);
     public void updateById(Group group);
     public void removeById(int id);
-    public void removeByUser(User user);
+    public void removeByOwner(User user);
+    public void createGroup(String name, List<User> userList);
+
+    public void changeOwner(Group group, User newOwner);
+    public void addUser(Group group, User user);
+    public void removeUser(Group group, User user);
+    public List<Group> getByUser(User user);
+    public List<User> getUsers(Group group);
 }

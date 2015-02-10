@@ -11,9 +11,12 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,9 @@ public class GroupSqlDAO implements GroupDAO {
 
     @Autowired
     NamedParameterJdbcTemplate namedParamTemplate;
+
+    @Autowired
+    UserSqlDao userSqlDao;
 
     private RowMapper<Group> groupRowMapper=new RowMapper<Group>() {
         @Override
@@ -41,7 +47,7 @@ public class GroupSqlDAO implements GroupDAO {
     }
 
     @Override
-    public List<Group> getByUser(User user) {
+    public List<Group> getByOwner(User user) {
         final String qryStr="SELECT * FROM ml_groups WHERE owner_id=:owner_id";
 
         Map<String,Object> params=new HashMap <String,Object>();
@@ -98,24 +104,112 @@ public class GroupSqlDAO implements GroupDAO {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED)
     public void removeById(int id) {
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
         mapPars.put("id",id);
 
-        final String qryStr="DELETE FROM ml_groups WHERE id=:id";
+        String  qryStr="DELETE FROM ml_user_group_ref WHERE group_id=:id";
+        namedParamTemplate.update(qryStr,mapPars);
+
+        qryStr="DELETE FROM ml_groups WHERE id=:id";
+        namedParamTemplate.update(qryStr,mapPars);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void removeByOwner(User user) {
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+
+        ArrayList<Group> removedGroups= (ArrayList<Group>) getByOwner(user);
+
+        String qryStr="DELETE FROM ml_user_group_ref WHERE group_id=:id";
+
+        for(Group group:removedGroups){
+            mapPars.put("id",group.getId());
+            namedParamTemplate.update(qryStr,mapPars);
+        }
+
+        mapPars.put("owner_id",user.getId());
+
+        qryStr="DELETE FROM ml_groups WHERE owner_id=:owner_id";
 
         namedParamTemplate.update(qryStr,mapPars);
     }
 
     @Override
-    public void removeByUser(User user) {
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void createGroup(String name, List<User> userList) {
+        if(userList.size()>0) {
+            Group group = new Group();
+
+            group.setName(name);
+            group.setOwner_id(userList.get(0).getId());
+            insert(group);
+
+            for (User user : userList) {
+                addUser(group,user);
+            }
+        }
+    }
+
+    @Override
+    public void changeOwner(Group group, User newOwner) {
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
-        mapPars.put("owner_id",user.getId());
+        mapPars.put("owner_id",newOwner.getId());
+        mapPars.put("id",group.getId());
 
-        final String qryStr="DELETE FROM ml_groups WHERE owner_id=:owner_id";
-
+        final String  qryStr="UPDATE ml_groups SET owner_id=:owner_id WHERE id=:id";
         namedParamTemplate.update(qryStr,mapPars);
+
+    }
+
+    @Override
+    public void addUser(Group group, User user) {
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+
+        mapPars.put("group_id",group.getId());
+        mapPars.put("user_id",user.getId());
+
+        String  qryStr="SELECT COUNT(id) FROM ml_user_group_ref WHERE group_id=:group_id AND user_id=:user_id";
+        Integer count=namedParamTemplate.queryForObject(qryStr,mapPars,Integer.class);
+
+        if(count==0) {
+            qryStr = "INSERT INTO ml_user_group_ref SET group_id=:group_id, user_id=:user_id";
+            namedParamTemplate.update(qryStr, mapPars);
+        }
+    }
+
+    @Override
+    public void removeUser(Group group, User user) {
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+
+        mapPars.put("group_id",group.getId());
+        mapPars.put("user_id",user.getId());
+
+        String  qryStr="DELETE FROM ml_user_group_ref WHERE group_id=:group_id AND user_id=:user_id";
+        namedParamTemplate.update(qryStr, mapPars);
+    }
+
+    @Override
+    public List<Group> getByUser(User user) {
+        final String qryStr="SELECT * FROM ml_groups WHERE id IN " +
+                "(SELECT group_id FROM ml_user_group_ref WHERE user_id=:user_id)";
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+        mapPars.put("user_id",user.getId());
+
+        return namedParamTemplate.query(qryStr,mapPars,groupRowMapper);
+    }
+
+    @Override
+    public List<User> getUsers(Group group) {
+        final String qryStr="SELECT * FROM ml_users WHERE id IN " +
+                "(SELECT user_id FROM ml_user_group_ref WHERE group_id=:group_id)";
+        Map<String,Object> mapPars=new HashMap<String,Object>();
+        mapPars.put("group_id",group.getId());
+
+        return namedParamTemplate.query(qryStr,mapPars,userSqlDao.userRowMapper);
     }
 }

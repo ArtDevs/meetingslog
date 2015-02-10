@@ -1,6 +1,8 @@
 package org.artdevs.meetingslog.core.dao.impl;
 
 import junit.framework.TestCase;
+import org.artdevs.meetingslog.core.dao.GroupDAO;
+import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Group;
 import org.artdevs.meetingslog.core.model.User;
 import org.junit.After;
@@ -26,10 +28,10 @@ import java.util.Random;
 public class GroupSqlDAOTest extends TestCase {
 
     @Autowired
-    GroupSqlDAO groupSqlDao;
+    GroupDAO groupDao;
 
     @Autowired
-    UserSqlDao userSqlDao;
+    UserDAO userDao;
 
     int   numInitGrp;//messageSqlDao.getAll()==null?0:messageSqlDao.getAll().size();
     int   numTestGrp;
@@ -39,9 +41,9 @@ public class GroupSqlDAOTest extends TestCase {
     @Before
     public void setUp() throws Exception {
         //super.setUp();
-        numInitGrp=groupSqlDao.getAll()==null?0:groupSqlDao.getAll().size();
+        numInitGrp= groupDao.getAll()==null?0: groupDao.getAll().size();
         numTestGrp=10;
-        user=userSqlDao.findByLogin("admin");
+        user= userDao.findByLogin("admin");
 
         if(user==null) throw (new Exception("Failed to get default user (admin)"));
 
@@ -50,7 +52,7 @@ public class GroupSqlDAOTest extends TestCase {
             grp.setName("Test group " + i);
             grp.setOwner_id(user.getId());
 
-            groupSqlDao.insert(grp);
+            groupDao.insert(grp);
             insertedIDs.add(grp.getId());
         }
     }
@@ -58,25 +60,25 @@ public class GroupSqlDAOTest extends TestCase {
     @After
     public void tearDown() throws Exception {
         for (Integer i:insertedIDs){
-            groupSqlDao.removeById(i);
+            groupDao.removeById(i);
         }
     }
 
     @Test
     public void testGetAll() throws Exception {
-        assertEquals(numTestGrp+numInitGrp,groupSqlDao.getAll().size());
+        assertEquals(numTestGrp+numInitGrp, groupDao.getAll().size());
     }
 
     @Test
     public void testGetByUser() throws Exception {
-        assertTrue(groupSqlDao.getByUser(user).size()>=numTestGrp &&
-                groupSqlDao.getByUser(user).size()<=groupSqlDao.getAll().size());
+        assertTrue(groupDao.getByOwner(user).size()>=numTestGrp &&
+                groupDao.getByOwner(user).size()<= groupDao.getAll().size());
     }
 
     @Test
     public void testFindById() throws Exception {
         Random random=new Random(numTestGrp);
-        Group grp=groupSqlDao.findById(insertedIDs.get(random.nextInt()%numTestGrp));
+        Group grp= groupDao.findById(insertedIDs.get(random.nextInt()%numTestGrp));
         assertTrue(grp.getName().contains("Test group"));
     }
 
@@ -86,10 +88,10 @@ public class GroupSqlDAOTest extends TestCase {
         grp.setName("Test group " + (numTestGrp));
         grp.setOwner_id(user.getId());
 
-        groupSqlDao.insert(grp);
+        groupDao.insert(grp);
         insertedIDs.add(grp.getId());
 
-        assertEquals(groupSqlDao.findById(insertedIDs.get(numTestGrp)).getName(),
+        assertEquals(groupDao.findById(insertedIDs.get(numTestGrp)).getName(),
                 ("Test group "+numTestGrp));
 
     }
@@ -98,19 +100,19 @@ public class GroupSqlDAOTest extends TestCase {
     public void testUpdateById() throws Exception {
         final String newGrpText="Corrected group name.";
 
-        Group grp=groupSqlDao.findById(insertedIDs.get(0));
+        Group grp= groupDao.findById(insertedIDs.get(0));
         grp.setName(newGrpText);
-        groupSqlDao.updateById(grp);
+        groupDao.updateById(grp);
 
-        assertEquals(newGrpText,groupSqlDao.findById(insertedIDs.get(0)).getName());
+        assertEquals(newGrpText, groupDao.findById(insertedIDs.get(0)).getName());
 
     }
 
     @Test
     public void testRemoveById() throws Exception {
-        groupSqlDao.removeById(insertedIDs.get(numTestGrp-1));
+        groupDao.removeById(insertedIDs.get(numTestGrp-1));
 
-        assertNull(groupSqlDao.findById(insertedIDs.get(numTestGrp - 1)));
+        assertNull(groupDao.findById(insertedIDs.get(numTestGrp - 1)));
 
         insertedIDs.remove(numTestGrp-1);
 
@@ -130,22 +132,22 @@ public class GroupSqlDAOTest extends TestCase {
         user1.setPassword("123qwe");
 
         try {
-            userSqlDao.insert(user1);
+            userDao.insert(user1);
         }catch (RuntimeException e){
             user1.setLogin("testUserDelme1");
-            userSqlDao.insert(user1);
+            userDao.insert(user1);
         }
 
         for (Integer i:insertedIDs){
-            Group grp=groupSqlDao.findById(i);
+            Group grp= groupDao.findById(i);
             grp.setOwner_id(user1.getId());
-            groupSqlDao.updateById(grp);
+            groupDao.updateById(grp);
         }
 
-        groupSqlDao.removeByUser(user1);
-        userSqlDao.removeById(user1.getId());
+        groupDao.removeByOwner(user1);
+        userDao.removeById(user1.getId());
 
-        assertEquals(numInitGrp, groupSqlDao.getAll().size());
+        assertEquals(numInitGrp, groupDao.getAll().size());
 
     }
 }

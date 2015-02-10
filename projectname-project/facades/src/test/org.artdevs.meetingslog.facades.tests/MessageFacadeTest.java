@@ -63,8 +63,8 @@ public class MessageFacadeTest {
 
     @Test
     public void testProcessMessage() {
-        assertNotNull("Your messageFacade is NULL", messageFacade);
         Message msg = new Message(-3,false, "Some title", "Some text");
+        assertNotNull("Your message is NULL", msg);
         //Creating messages
         beforeList = messageFacade.getMessagesByUser(user);
         messageFacade.createMessage(msg);
@@ -97,8 +97,8 @@ public class MessageFacadeTest {
         Message newEditableMessage = messageFacade.getMessageById(-1);    //work with our messages from BD
         Message newNotEditableMessage = messageFacade.getMessageById(-2);
 
-        assertTrue("Test on editable of your message is failed", newEditableMessage.isReadonly());
-        assertFalse("Test on not editable of your message is failed", newNotEditableMessage.isReadonly());
+        assertFalse("Test on editable of your message is failed", newEditableMessage.isReadonly());
+        assertTrue("Test on not editable of your message is failed", newNotEditableMessage.isReadonly());
 
         String oldEditableTextMsg = newEditableMessage.getMsg_text();
         messageFacade.editMessage(newEditableMessage, "New Text");

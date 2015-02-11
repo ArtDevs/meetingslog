@@ -16,7 +16,7 @@ public interface GroupDAO {
     public void updateById(Group group);
     public void removeById(int id);
     public void removeByOwner(User user);
-    public void createGroup(String name, List<User> userList);
+    public Group createGroup(String name, List<User> userList);
 
     public void changeOwner(Group group, User newOwner);
     public void addUser(Group group, User user);

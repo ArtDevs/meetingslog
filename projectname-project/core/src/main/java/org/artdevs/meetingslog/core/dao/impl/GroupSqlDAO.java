@@ -140,7 +140,7 @@ public class GroupSqlDAO implements GroupDAO {
 
     @Override
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void createGroup(String name, List<User> userList) {
+    public Group createGroup(String name, List<User> userList) {
         if(userList.size()>0) {
             Group group = new Group();
 
@@ -151,7 +151,10 @@ public class GroupSqlDAO implements GroupDAO {
             for (User user : userList) {
                 addUser(group,user);
             }
+            return group;
         }
+        else
+            return null;
     }
 
     @Override

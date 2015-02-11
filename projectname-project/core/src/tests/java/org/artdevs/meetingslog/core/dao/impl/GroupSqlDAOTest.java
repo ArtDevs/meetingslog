@@ -66,13 +66,13 @@ public class GroupSqlDAOTest extends TestCase {
 
     @Test
     public void testGetAll() throws Exception {
-        assertEquals(numTestGrp+numInitGrp, groupDao.getAll().size());
+        assertEquals(numTestGrp + numInitGrp, groupDao.getAll().size());
     }
 
     @Test
     public void testGetByUser() throws Exception {
-        assertTrue(groupDao.getByOwner(user).size()>=numTestGrp &&
-                groupDao.getByOwner(user).size()<= groupDao.getAll().size());
+        assertTrue(groupDao.getByOwner(user).size() >= numTestGrp &&
+                groupDao.getByOwner(user).size() <= groupDao.getAll().size());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GroupSqlDAOTest extends TestCase {
         insertedIDs.add(grp.getId());
 
         assertEquals(groupDao.findById(insertedIDs.get(numTestGrp)).getName(),
-                ("Test group "+numTestGrp));
+                ("Test group " + numTestGrp));
 
     }
 
@@ -150,4 +150,95 @@ public class GroupSqlDAOTest extends TestCase {
         assertEquals(numInitGrp, groupDao.getAll().size());
 
     }
+
+    @Test
+    public void testGetByOwner() throws Exception {
+        assertTrue(groupDao.getByOwner(user).size()>=numTestGrp);
+    }
+
+    @Test
+    public void testCreateGroup() throws Exception {
+        User user1=new User();
+        user1.setLogin("testUserDelme");
+        user1.setEmail("test@delme.usr");
+        user1.setAddress("unknown address");
+        user1.setPhoneNumber1("11111111111");
+        user1.setPhoneNumber2("22222222222");
+        user1.setComment("User for testing message DAO");
+        user1.setSecondName("Userman");
+        user1.setFirstName("Delme");
+        user1.setPassword("123qwe");
+
+        try {
+            userDao.insert(user1);
+        }catch (RuntimeException e){
+            user1.setLogin("testUserDelme1");
+            userDao.insert(user1);
+        }
+
+        List<User> allUsers=userDao.getAll();
+
+        Group group=groupDao.createGroup("delme all users", allUsers);
+
+        assertEquals(groupDao.getUsers(group).size(),allUsers.size());
+
+        groupDao.removeById(group.getId());
+        userDao.removeById(user1.getId());
+    }
+
+    @Test
+    public void testChangeOwner() throws Exception {
+        User user1=new User();
+        user1.setLogin("testUserDelme");
+        user1.setEmail("test@delme.usr");
+        user1.setAddress("unknown address");
+        user1.setPhoneNumber1("11111111111");
+        user1.setPhoneNumber2("22222222222");
+        user1.setComment("User for testing message DAO");
+        user1.setSecondName("Userman");
+        user1.setFirstName("Delme");
+        user1.setPassword("123qwe");
+
+        try {
+            userDao.insert(user1);
+        }catch (RuntimeException e){
+            user1.setLogin("testUserDelme1");
+            userDao.insert(user1);
+        }
+
+        groupDao.changeOwner(groupDao.findById(insertedIDs.get(0)),user1);
+
+        assertEquals(groupDao.getByOwner(user1).size(),1);
+        userDao.removeById(user1.getId());
+    }
+
+    @Test
+    public void testAddUser() throws Exception {
+        User user1=new User();
+        user1.setLogin("testUserDelme");
+        user1.setEmail("test@delme.usr");
+        user1.setAddress("unknown address");
+        user1.setPhoneNumber1("11111111111");
+        user1.setPhoneNumber2("22222222222");
+        user1.setComment("User for testing message DAO");
+        user1.setSecondName("Userman");
+        user1.setFirstName("Delme");
+        user1.setPassword("123qwe");
+
+        try {
+            userDao.insert(user1);
+        }catch (RuntimeException e){
+            user1.setLogin("testUserDelme1");
+            userDao.insert(user1);
+        }
+
+        groupDao.addUser(groupDao.findById(insertedIDs.get(0)),user1);
+        assertEquals(groupDao.getUsers(groupDao.findById(insertedIDs.get(0))).size(),1);
+
+        groupDao.removeUser(groupDao.findById(insertedIDs.get(0)), user1);
+        assertEquals(groupDao.getUsers(groupDao.findById(insertedIDs.get(0))).size(),0);
+
+        userDao.removeById(user1.getId());
+    }
+
 }

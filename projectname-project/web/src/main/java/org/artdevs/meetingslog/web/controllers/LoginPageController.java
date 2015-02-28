@@ -4,7 +4,6 @@ import org.artdevs.meetingslog.core.dao.impl.UserSqlDao;
 import org.artdevs.meetingslog.core.model.User;
 import org.artdevs.meetingslog.web.constants.WebConstants;
 import org.artdevs.meetingslog.web.forms.LoginForm;
-import org.artdevs.meetingslog.web.forms.NewUserForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

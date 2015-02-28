@@ -15,13 +15,13 @@ import javax.servlet.http.HttpServletRequest;
  * Created by Artem L.V. on 20.12.14.
  */
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomePageController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String homePage(final Model model,
-                           @RequestParam("login") String login,
-                           @RequestParam("pass") String pass) {
+                           @RequestParam(value = "login", required = false) String login,
+                           @RequestParam(value = "pass", required = false) String pass) {
 
         model.addAttribute("login", login);
         model.addAttribute("pass", pass);

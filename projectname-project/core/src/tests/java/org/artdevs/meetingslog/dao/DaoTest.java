@@ -13,50 +13,50 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(
-        {
-                "classpath*:/META-INF/custom-config/*-custom-spring.xml",
-                "classpath*:/META-INF/config/meetingslog-*-config.xml"
-        }
+		{
+				"classpath*:/META-INF/custom-config/*-custom-spring.xml",
+				"classpath*:/META-INF/config/meetingslog-*-config.xml"
+		}
 )
 public class DaoTest extends TestCase {
+/*
+	@Autowired
+	private UserDAO userDAO;
 
-    @Autowired
-    private UserDAO userDAO;
+	@Autowired
+	private RoleDAO roleDAO;
 
-    @Autowired
-    private RoleDAO roleDAO;
+	public void prepareData(final int testQuant) {
+		User testUser = new User();
+		Role testRole = new Role();
 
-     public void prepareData(final int testQuant){
-        User testUser = new User();
-        Role testRole = new Role();
+		for (int i = 0; i < testQuant; i++) {
 
-        for(int i=0; i<testQuant; i++){
+			testRole.setName("Slava" + i);
+			testRole.setDescription("my" + i);
+			testRole.setPermissions(0xffff + i);
 
-            testRole.setName("Slava"+i);
-            testRole.setDescription("my"+i);
-            testRole.setPermissions(0xffff+i);
+			roleDAO.insert(testRole);
+			testRole = roleDAO.findByName(testRole.getName());
 
-            roleDAO.insert(testRole);
-            testRole=roleDAO.findByName(testRole.getName());
+			testUser.setLogin("testLogin" + i);
+			testUser.setPassword("testPassword" + i);
+			testUser.setFirstName("testFirstName" + i);
+			testUser.setSecondName("testSecondName" + i);
+			testUser.setEmail("test@email.none");
+			testUser.setComment("testComment" + i);
 
-            testUser.setLogin("testLogin"+i);
-            testUser.setPassword("testPassword"+i);
-            testUser.setFirstName("testFirstName"+i);
-            testUser.setSecondName("testSecondName"+i);
-            testUser.setEmail("test@email.none");
-            testUser.setComment("testComment"+i);
+			userDAO.insert(testUser);
+		}
+	}
 
-            userDAO.insert(testUser);
-        }
-    }
+	public void cleanData(final int testQuant) {
+		for (int i = 0; i < testQuant; i++) {
+			userDAO.removeByLogin("testLogin" + i);
+			roleDAO.removeByName("Slava" + i);
+		}
 
-    public void cleanData(final int testQuant){
-        for(int i=0; i<testQuant; i++) {
-            userDAO.removeByLogin("testLogin" + i);
-            roleDAO.removeByName("Slava"+i);
-        }
-
-    }
+	}
 
     @Test
     public void testInsert ()throws Exception {
@@ -259,6 +259,5 @@ public class DaoTest extends TestCase {
 
         assertEquals(0,userDAO.getByEmail("test@email.none").size());
 //        assertEquals(0,roleDAO.getAll().size());
-    }
-
+    }*/
 }

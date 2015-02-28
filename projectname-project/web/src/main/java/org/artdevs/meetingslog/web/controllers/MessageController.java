@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/msg")
 public class MessageController {
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addMessage(final Model model) {
-
-        return WebConstants.MESSAGE_PAGE;
-    }
-
-    @RequestMapping(value = "/remove", method = RequestMethod.POST)
-    public String removeMessage(final Model model) {
-
-        return WebConstants.MESSAGE_PAGE;
-    }
-
-    @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String editMessage(final Model model) {
-
-        return WebConstants.MESSAGE_PAGE;
-    }
+//    @RequestMapping(value = "/add", method = RequestMethod.POST)
+//    public String addMessage(final Model model) {
+//
+//        return WebConstants.MESSAGE_PAGE;
+//    }
+//
+//    @RequestMapping(value = "/remove", method = RequestMethod.POST)
+//    public String removeMessage(final Model model) {
+//
+//        return WebConstants.MESSAGE_PAGE;
+//    }
+//
+//    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+//    public String editMessage(final Model model) {
+//
+//        return WebConstants.MESSAGE_PAGE;
+//    }
 }

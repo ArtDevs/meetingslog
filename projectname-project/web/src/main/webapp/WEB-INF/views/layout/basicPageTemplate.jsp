@@ -7,19 +7,21 @@
 <head>
 	<meta charset="UTF-8">
 	<title><tiles:getAsString name="title"/></title>
-	<link rel="stylesheet" type="text/css" href="/_ui/css/main.css"/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>    <link href='http://fonts.googleapis.com/css?family=Lora:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/_ui/css/main.css"/>
 </head>
 
 <body>
-<%--holder for header and body--%>
-<div class="contentBar">
 
-	<%--header slot goes here--%>
-	<header class="headerBar">
-		<tiles:insertAttribute name="header"/>
-	</header>
-
-
+<%--header slot goes here--%>
+<header class="headerBar">
+    <div class="container">
+        <tiles:insertAttribute name="header"/>
+    </div>
+</header>
+<%--holder body--%>
+<div class="container">
 	<%--main content slot goes here--%>
 	<div class="mainContent">
 		<tiles:insertAttribute name="body"/>
@@ -28,7 +30,9 @@
 
 <%--footer goes here--%>
 <footer class="footerBar">
-	<tiles:insertAttribute name="footer"/>
+    <div class="container">
+	    <tiles:insertAttribute name="footer"/>
+    </div>
 </footer>
 </body>
 </html>

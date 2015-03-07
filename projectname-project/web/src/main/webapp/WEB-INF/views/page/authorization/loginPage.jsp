@@ -21,11 +21,12 @@
                 ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
         </div>
     </c:if>
+    <div class="cf">
+        <%--buttons that submits our form for processing--%>
+        <input class="button" type="submit" value="Log in"/>
 
-    <%--buttons that submits our form for processing--%>
-    <input class="button" type="submit" value="Log in"/>
-
-    <c:url var="registrationUrl" value="/register"/>
-    <a href="${registrationUrl}">Register here</a>
+        <c:url var="registrationUrl" value="/register"/>
+        <a href="${registrationUrl}" class="register-link">Register here</a>
+    </div>
 </form>
 </section>

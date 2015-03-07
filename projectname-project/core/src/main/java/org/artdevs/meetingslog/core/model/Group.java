@@ -1,5 +1,8 @@
 package org.artdevs.meetingslog.core.model;
 
+import java.util.Collection;
+import java.util.Collections;
+
 /**
  * Created by Slava on 24.01.2015.
  */

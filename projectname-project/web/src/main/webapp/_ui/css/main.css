@@ -502,9 +502,35 @@ table {
     border-spacing: 0;
 }
 
+/**
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    contenteditable attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that are clearfixed.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
+}
+
 /* ===== == = === Base Styles === = == ===== */
 html, body {
-    height: 100%;
     margin: 0;
     padding: 0;
     color: #111;
@@ -513,6 +539,12 @@ html, body {
 body {
     background-color: #f8f8f8;
     font-size: 0.875em;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -9em;
 }
 a {
     color:#990000;
@@ -525,12 +557,26 @@ header, footer {
     background-color: #292929;
     color:#bbc3c8;
 }
+header {
+    display: block;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 500;
+}
+footer {
+    bottom: 0;
+    height: 8em;
+    position: absolute;
+    width: 100%;
+}
 label {
     font-weight: bold;
     text-align: left;
 }
 .container {
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 .login-form {
     background: #ffffff;
@@ -540,7 +586,7 @@ label {
     -o-box-shadow: 0 1px 0 #fff inset;
     box-shadow: 0 1px 0 #fff inset;
     border: 1px solid #bbc3c8;
-    margin: 3em auto;
+    margin: 8em auto 3em;
     padding: 2em;
     position: relative;
     text-align: center;
@@ -608,7 +654,7 @@ label {
     color: #555;
     font: 13px Helvetica, Arial, sans-serif;
     margin: 0 0 10px;
-    padding: 15px 10px 15px 40px;
+    padding: 15px;
     width: 70%;
 }
 .login-form input[type="submit"] {
@@ -628,7 +674,8 @@ label {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fafafa), color-stop(100%, #f0f0f0));
     background-image: -webkit-linear-gradient(top, #fafafa, #f0f0f0);
     color: #807b6e;
-    display: inline-block;
+    display: block;
+    float: right;
     font-size: 1.125em;
     font-family: "Open Sans Condensed",sans-serif;
     height: 46px;
@@ -636,6 +683,11 @@ label {
     padding: 0 25px;
     text-shadow: 1px 1px 0 #fff;
     width: auto;
+}
+.login-form .register-link {
+    float: right;
+    line-height: 46px;
+    margin-right: 2em;
 }
 .error {
     color: #ed1c24;

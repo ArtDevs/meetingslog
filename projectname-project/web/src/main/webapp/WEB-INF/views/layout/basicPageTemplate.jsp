@@ -13,21 +13,21 @@
 </head>
 
 <body>
-
-<%--header slot goes here--%>
-<header class="headerBar">
+<div class="wrapper">
+    <%--header slot goes here--%>
+    <header class="headerBar">
+        <div class="container">
+            <tiles:insertAttribute name="header"/>
+        </div>
+    </header>
+    <%--holder body--%>
     <div class="container">
-        <tiles:insertAttribute name="header"/>
+        <%--main content slot goes here--%>
+        <div class="mainContent">
+            <tiles:insertAttribute name="body"/>
+        </div>
     </div>
-</header>
-<%--holder body--%>
-<div class="container">
-	<%--main content slot goes here--%>
-	<div class="mainContent">
-		<tiles:insertAttribute name="body"/>
-	</div>
 </div>
-
 <%--footer goes here--%>
 <footer class="footerBar">
     <div class="container">

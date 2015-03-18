@@ -240,5 +240,4 @@ public class GroupSqlDAOTest extends TestCase {
 
         userDao.removeById(user1.getId());
     }
-
 }

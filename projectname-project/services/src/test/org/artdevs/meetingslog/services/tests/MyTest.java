@@ -1,22 +1,25 @@
-package artdevs.meetingslog.services.tests;
+package org.artdevs.meetingslog.services.tests;
 
-import junit.framework.Assert;
 import org.artdevs.meetingslog.services.ServiceComponent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNotNull;
 
 /**
  * Created by Artem L.V. on 20.12.14.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/META-INF/custom-config/services-custom-spring.xml")
+@ContextConfiguration(
+        {
+                "classpath*:/META-INF/custom-config/*-custom-spring.xml",
+                "classpath*:/META-INF/config/meetingslog-*-config.xml"
+        }
+)
 public class MyTest {
 
     @Autowired

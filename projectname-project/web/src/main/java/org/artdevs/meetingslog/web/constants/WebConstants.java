@@ -5,11 +5,8 @@ package org.artdevs.meetingslog.web.constants;
  */
 public class WebConstants {
 
-    public static String HOME_PAGE = "home/homePage";
-    public static String ACCOUNT_PAGE = "account/accountPage";
-    public static String LOGIN_PAGE = "authorization/loginPage";
-    public static String REGISTER_PAGE = "authorization/registerPage";
-    public static String FORGOT_PASSWORD_PAGE = "authorization/forgotPasswordPage";
-    public static String MESSAGE_PAGE = "message/addNewMessagePage";
+    public static String HOME_PAGE = "meetingslog.homepage";
+    public static String LOGIN_PAGE = "meetingslog.login";
+    public static String REGISTER_PAGE = "meetingslog.register";
 
 }

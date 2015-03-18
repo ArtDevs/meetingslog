@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name="meetingslog.general" template="/WEB-INF/views/layout/basicPageTemplate.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/views/tiles/menu.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+
+	<definition name="meetingslog.login" extends="meetingslog.general">
+		<put-attribute name="title" value="Authorization required" />
+		<put-attribute name="body" value="/WEB-INF/views/page/authorization/loginPage.jsp" />
+	</definition>
+
+	<definition name="meetingslog.register" extends="meetingslog.general">
+		<put-attribute name="title" value="Registration page" />
+		<put-attribute name="body" value="/WEB-INF/views/page/authorization/registerPage.jsp" />
+	</definition>
+
+	<definition name="meetingslog.homepage" extends="meetingslog.general">
+		<put-attribute name="title" value="Home page" />
+		<put-attribute name="body" value="/WEB-INF/views/page/home/homePage.jsp" />
+	</definition>
+
+</tiles-definitions>

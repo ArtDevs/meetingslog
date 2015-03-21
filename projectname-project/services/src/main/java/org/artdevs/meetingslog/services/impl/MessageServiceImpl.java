@@ -3,7 +3,7 @@ package org.artdevs.meetingslog.services.impl;
 import org.artdevs.meetingslog.core.dao.MessageDAO;
 import org.artdevs.meetingslog.core.dao.UserDAO;
 import org.artdevs.meetingslog.core.model.Message;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 import org.artdevs.meetingslog.services.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,7 +41,7 @@ public class MessageServiceImpl implements MessageService {
 			messageDAO.removeByUser(userDAO.findByLogin(owner));
 	}
 
-	public void removeMessages(User owner) {
+	public void removeMessages(UserModel owner) {
 		if (userDAO.getAll().contains(owner))
 			messageDAO.removeByUser(owner);
 	}

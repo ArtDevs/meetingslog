@@ -2,7 +2,7 @@ package org.artdevs.meetingslog.services;
 
 import java.util.List;
 import org.artdevs.meetingslog.core.model.Message;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 
 /**
  * Created by Artem L.V. on 1/26/15.
@@ -17,7 +17,7 @@ public interface MessageService {
 
 	public void removeMessages(String owner);
 
-	public void removeMessages(User owner);
+	public void removeMessages(UserModel owner);
 
 	public void editMessage(Message msg);
 

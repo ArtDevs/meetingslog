@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 
-<sf:form method="POST" modelAttribute="newUser">
+<sf:form method="POST" modelAttribute="newUserForm">
   <%--<sf:errors path="*" cssClass="error"/>--%>
 
   <fieldset>

@@ -2,7 +2,7 @@ package org.artdevs.meetingslog.core.dao.impl;
 
 import junit.framework.TestCase;
 import org.artdevs.meetingslog.core.model.Message;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -34,7 +34,7 @@ public class MessageSqlDaoTest extends TestCase {
 
     int numInitMsg;//messageSqlDao.getAll()==null?0:messageSqlDao.getAll().size();
     int numTestMsg;
-    User user;
+    UserModel userModel;
     List<Integer> insertedIDs=new ArrayList<>(numTestMsg);
 
     @Before
@@ -44,11 +44,11 @@ public class MessageSqlDaoTest extends TestCase {
 
         numInitMsg=messageSqlDao.getAll()==null?0:messageSqlDao.getAll().size();
         numTestMsg=10;
-        user=userSqlDao.findByLogin("admin");
+        userModel =userSqlDao.findByLogin("admin");
 
-        if(user==null) throw (new Exception("Failed to get default user (admin)"));
+        if(userModel ==null) throw (new Exception("Failed to get default user (admin)"));
 
-        Message msg=new Message(user.getId());
+        Message msg=new Message(userModel.getId());
         for(int i=0; i<numTestMsg; i++){
             msg.setMsg_title("Test message "+i);
             msg.setMsg_text("Message, created to test DAO.");
@@ -77,8 +77,8 @@ public class MessageSqlDaoTest extends TestCase {
 
     @Test
     public void testGetByUser() throws Exception {
-        assertTrue(messageSqlDao.getByUser(user).size()>=numTestMsg &&
-                messageSqlDao.getByUser(user).size()<=messageSqlDao.getAll().size());
+        assertTrue(messageSqlDao.getByUser(userModel).size()>=numTestMsg &&
+                messageSqlDao.getByUser(userModel).size()<=messageSqlDao.getAll().size());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class MessageSqlDaoTest extends TestCase {
 
     @Test
     public void testInsert() throws Exception {
-        Message msg=new Message(user.getId());
+        Message msg=new Message(userModel.getId());
         msg.setMsg_title("Test message "+(numTestMsg));
         msg.setMsg_text("Message, created to test DAO.");
         msg.setReadonly(false);

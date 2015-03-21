@@ -1,7 +1,7 @@
 package org.artdevs.meetingslog.core.dao;
 
 import org.artdevs.meetingslog.core.model.Group;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import java.util.List;
  */
 public interface GroupDAO {
     public List<Group> getAll();
-    public List<Group> getByUser(User user);
+    public List<Group> getByUser(UserModel userModel);
     public Group findById(int id);
     public void insert(Group group);
     public void updateById(Group group);
     public void removeById(int id);
-    public void removeByUser(User user);
+    public void removeByUser(UserModel userModel);
 }

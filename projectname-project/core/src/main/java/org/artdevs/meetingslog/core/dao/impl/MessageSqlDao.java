@@ -2,7 +2,7 @@ package org.artdevs.meetingslog.core.dao.impl;
 
 import org.artdevs.meetingslog.core.dao.MessageDAO;
 import org.artdevs.meetingslog.core.model.Message;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -48,11 +48,11 @@ public class MessageSqlDao implements MessageDAO{
     }
 
     @Override
-    public List<Message> getByUser(User user) {
+    public List<Message> getByUser(UserModel userModel) {
         final String qryStr="SELECT * FROM ml_messages WHERE owner_id=:owner_id";
 
         Map<String,Object> mapPars=new HashMap<String,Object>();
-        mapPars.put("owner_id",user.getId());
+        mapPars.put("owner_id", userModel.getId());
 
         return namedParamTemplate.query(qryStr,mapPars, msgRowMapper);
     }
@@ -127,10 +127,10 @@ public class MessageSqlDao implements MessageDAO{
     }
 
     @Override
-    public void removeByUser(User user) {
+    public void removeByUser(UserModel userModel) {
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
-        mapPars.put("owner_id",user.getId());
+        mapPars.put("owner_id", userModel.getId());
 
         final String qryStr="DELETE FROM ml_mesages WHERE owner_id=:owner_id";
 

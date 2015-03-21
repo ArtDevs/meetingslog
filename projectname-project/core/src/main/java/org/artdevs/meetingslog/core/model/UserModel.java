@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Created by Slava on 10.12.2014.
  */
-public class User {
+public class UserModel {
     private Integer id;
     private String login;
     private String password;
@@ -19,20 +19,20 @@ public class User {
     private Date tmLastLogin;
     private Date tmRegistered;
 
-    public User(){}
+    public UserModel(){}
 
-    public User(Integer id,
-                String login,
-                String password,
-                String firstName,
-                String secondName,
-                String email,
-                String address,
-                String phoneNumber1,
-                String phoneNumber2,
-                String comment,
-                Date tmLastLogin,
-                Date tmRegistered) {
+    public UserModel(Integer id,
+                     String login,
+                     String password,
+                     String firstName,
+                     String secondName,
+                     String email,
+                     String address,
+                     String phoneNumber1,
+                     String phoneNumber2,
+                     String comment,
+                     Date tmLastLogin,
+                     Date tmRegistered) {
         this.id = id;
         this.login = login;
         this.password = password;

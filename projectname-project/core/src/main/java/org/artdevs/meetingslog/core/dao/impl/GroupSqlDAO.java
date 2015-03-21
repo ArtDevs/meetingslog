@@ -2,7 +2,7 @@ package org.artdevs.meetingslog.core.dao.impl;
 
 import org.artdevs.meetingslog.core.dao.GroupDAO;
 import org.artdevs.meetingslog.core.model.Group;
-import org.artdevs.meetingslog.core.model.User;
+import org.artdevs.meetingslog.core.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -39,11 +39,11 @@ public class GroupSqlDAO implements GroupDAO {
     }
 
     @Override
-    public List<Group> getByUser(User user) {
+    public List<Group> getByUser(UserModel userModel) {
         final String qryStr="SELECT * FROM ml_groups WHERE owner_id=:owner_id";
 
         Map<String,Object> params=new HashMap <String,Object>();
-        params.put("owner_id",user.getId());
+        params.put("owner_id", userModel.getId());
 
         return namedParamTemplate.query(qryStr,params,groupRowMapper);
     }
@@ -104,10 +104,10 @@ public class GroupSqlDAO implements GroupDAO {
     }
 
     @Override
-    public void removeByUser(User user) {
+    public void removeByUser(UserModel userModel) {
         Map<String,Object> mapPars=new HashMap<String,Object>();
 
-        mapPars.put("owner_id",user.getId());
+        mapPars.put("owner_id", userModel.getId());
 
         final String qryStr="DELETE FROM ml_groups WHERE owner_id=:owner_id";
 

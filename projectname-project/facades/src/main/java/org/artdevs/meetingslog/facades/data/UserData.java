@@ -1,119 +1,85 @@
 package org.artdevs.meetingslog.facades.data;
 
-
-import org.springframework.stereotype.Component;
-
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-/**
- * Created by Slava on 25.12.2014.
- */
-@Component
 public class UserData {
-    @Size(min=5, max = 25, message = "Login must be from 5 to 25 characters long.")
-    @Pattern(regexp = "^[a-z,A-Z,0-9,_]{5,}$", message = "Login can include only letters, numbers and _")
-    private String login;
+	private String login;
+	private String password;
+	private String firstName;
+	private String secondName;
+	private String email;
+	private String address;
+	private String phoneNumber1;
+	private String phoneNumber2;
+	private String comment;
 
-    @Size(min=5, max = 25, message = "Password must be from 5 to 25 characters long.")
-    private String password;
+	public String getLogin() {
+		return login;
+	}
 
-    @Size(min=2, max = 50, message = "First name must be from 5 to 50 characters long.")
-    @Pattern(regexp = "^[^0-9]{2,}$", message = "First name can't include such set of characters.")
-    private String firstName;
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    @Size(min=2, max = 50, message = "Second name must be from 5 to 50 characters long.")
-    @Pattern(regexp = "^[^0-9]{2,}$", message = "Second name can't include such set of characters.")
-    private String secondName;
+	public String getPassword() {
+		return password;
+	}
 
-    @Size(min=5, max = 255, message = "E-mail address must be from 5 to 25 characters long.")
-    @Pattern(regexp = "^[a-z,A-Z,0-9,_.+%-]+@[a-z,A-Z,0-9,_.-]+\\.[a-z,A-Z]{2,4}$",
-            message = "E-mail can't include such set of characters.")
-    private String email;
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    @Size(max=255, message = "Too long for normal post address.")
-    private String address;
+	public String getFirstName() {
+		return firstName;
+	}
 
-    @Size(max=20, message = "Phone number too long.")
-    @Pattern(regexp = "^[0-9, +-]+")
-    private String phoneNumber1;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    @Size(max=20, message = "Phone number too long.")
-    @Pattern(regexp = "^[0-9, +-]+")
-    private String phoneNumber2;
+	public String getSecondName() {
+		return secondName;
+	}
 
-    @Size(max = 500, message = "Comment must up to 500 characters long.")
-    private String comment;
+	public void setSecondName(String secondName) {
+		this.secondName = secondName;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public String getPhoneNumber1() {
+		return phoneNumber1;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public void setPhoneNumber1(String phoneNumber1) {
+		this.phoneNumber1 = phoneNumber1;
+	}
 
-    public String getSecondName() {
-        return secondName;
-    }
+	public String getPhoneNumber2() {
+		return phoneNumber2;
+	}
 
-    public void setSecondName(String secondName) {
-        this.secondName = secondName;
-    }
+	public void setPhoneNumber2(String phoneNumber2) {
+		this.phoneNumber2 = phoneNumber2;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getPhoneNumber1() {
-        return phoneNumber1;
-    }
-
-    public void setPhoneNumber1(String phoneNumber1) {
-        this.phoneNumber1 = phoneNumber1;
-    }
-
-    public String getPhoneNumber2() {
-        return phoneNumber2;
-    }
-
-    public void setPhoneNumber2(String phoneNumber2) {
-        this.phoneNumber2 = phoneNumber2;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 }

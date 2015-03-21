@@ -1,13 +1,7 @@
 package org.artdevs.meetingslog.dao;
 
 import junit.framework.TestCase;
-import org.artdevs.meetingslog.core.dao.RoleDAO;
-import org.artdevs.meetingslog.core.dao.UserDAO;
-import org.artdevs.meetingslog.core.model.Role;
-import org.artdevs.meetingslog.core.model.User;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

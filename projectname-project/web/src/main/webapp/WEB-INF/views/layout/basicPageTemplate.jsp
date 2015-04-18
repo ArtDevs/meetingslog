@@ -6,6 +6,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title><tiles:getAsString name="title"/></title>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>    <link href='http://fonts.googleapis.com/css?family=Lora:400,700&subset=latin,cyrillic' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
@@ -15,7 +16,7 @@
 <body>
 <div class="wrapper">
     <%--header slot goes here--%>
-    <header class="headerBar">
+    <header class="header-bar">
         <div class="container">
             <tiles:insertAttribute name="header"/>
         </div>
@@ -29,10 +30,10 @@
     </div>
 </div>
 <%--footer goes here--%>
-<footer class="footerBar">
+<%--<footer class="footerBar">
     <div class="container">
 	    <tiles:insertAttribute name="footer"/>
     </div>
-</footer>
+</footer>--%>
 </body>
 </html>

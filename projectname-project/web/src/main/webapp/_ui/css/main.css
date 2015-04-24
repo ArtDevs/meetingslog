@@ -575,7 +575,7 @@ label {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"], textarea {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
@@ -653,7 +653,8 @@ input[type="submit"] {
     width: 13rem;
 }
 
-.login-form {
+.login-form,
+.registration-form  {
     background: #ffffff;
     -webkit-box-shadow: 0 1px 0 #fff inset;
     -moz-box-shadow: 0 1px 0 #fff inset;
@@ -669,7 +670,9 @@ input[type="submit"] {
     width: 400px;
 }
 .login-form:after,
-.login-form:before {
+.login-form:before,
+.registration-form:after,
+.registration-form:before {
     background: #ffffff;
     border: 1px solid #bbc3c8;
     content: "";
@@ -679,7 +682,9 @@ input[type="submit"] {
     position: absolute;
     width: 100%;
 }
-.login-form:after {
+
+.login-form:after,
+.registration-form:after{
      -webkit-transform: rotate(2deg);
      -moz-transform: rotate(2deg);
      -ms-transform: rotate(2deg);
@@ -688,7 +693,8 @@ input[type="submit"] {
      top: 0;
      z-index: -1;
  }
-.login-form:before {
+.login-form:before,
+.registration-form:before {
     -webkit-transform: rotate(-3deg);
     -moz-transform: rotate(-3deg);
     -ms-transform: rotate(-3deg);
@@ -697,7 +703,8 @@ input[type="submit"] {
     top: 0;
     z-index: -2;
 }
-.login-form label {
+.login-form label,
+.registration-form label{
     width: 28%;
 }
 

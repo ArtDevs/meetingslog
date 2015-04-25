@@ -718,6 +718,19 @@ input[type="submit"] {
     font-size: 0.75rem;
 }
 
+.validation_messages{
+    position: relative;
+    text-align: left;
+}
+
+.validation_messages .error{
+    position: absolute;
+    left: 420px;
+    top:10px;
+    white-space: nowrap;
+}
+
+
 /* 321px 20.063em - phone portrait for larger phones */
 @media only screen and (min-width: 20.063em) {
     .container {
